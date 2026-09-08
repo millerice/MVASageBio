@@ -1,6 +1,6 @@
 # Track 1 Methods Report — v0
 
-**Team**: MVASageBio · **Date**: 2026-09-08 · **Track**: T1 Variant Prediction · **Model**: 1 of 1
+**Team**: JiuTian Bio · **Date**: 2026-09-08 · **Track**: T1 Variant Prediction · **Model**: 1 of 1
 
 > Per the hackathon data-use terms, this public methods report contains no variant-level genotype data of the proband; candidate variants were submitted only through the official CSV channel. Gene-level conclusions and interpretation logic are published under CC-BY.
 
