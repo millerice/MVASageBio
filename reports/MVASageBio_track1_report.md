@@ -54,6 +54,8 @@ v0 contains a single `primary` row; no secondary or incidental findings met incl
 
 ## 8. Generative-AI disclosure (form Q10, required)
 
+> **Anthropic API, Claude (Claude Code), commercial terms, no training on customer content.**
+
 Commercially available generative AI (Anthropic Claude Code, Processor-type commercial API, not used for model training) was used for pipeline design, code implementation, analysis orchestration, and documentation. All biological claims were human-reviewed and traced to the tiered evidence ledger backed by public databases (ClinVar / gnomAD / OMIM / Ensembl); the model produced no biological assertion without database support. Variant-level candidate data (coordinates, genotypes, annotations) were processed by the tool; no raw VCF/FASTQ was transmitted, and no scoring feedback was given to the model.
 
 ## 9. License
