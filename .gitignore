@@ -2,6 +2,7 @@
 data/raw/
 data/processed/
 data/external/
+data/template/
 
 # 基因组级文件兜底拦截（即使被挪出 data/ 也拦）
 *.vcf
