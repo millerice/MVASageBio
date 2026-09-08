@@ -1,53 +1,61 @@
 # Track 1 Methods Report — v0
 
-**Team**: MVASageBio · **Date**: 2026-09-08 · **Track**: T1 Variant Prediction
+**Team**: MVASageBio · **Date**: 2026-09-08 · **Track**: T1 Variant Prediction · **Model**: 1 of 1
 
-> 按比赛数据使用条款，本公开方法报告不包含先证者变异级基因型数据；候选变异仅通过官方提交表单的 CSV 通道提交。疾病基因层面的结论（基因符号、解读逻辑）依据 CC-BY 发布。
+> Per the hackathon data-use terms, this public methods report contains no variant-level genotype data of the proband; candidate variants were submitted only through the official CSV channel. Gene-level conclusions and interpretation logic are published under CC-BY.
 
-## 1. Data
+## 1. Approach (form Q: "describe your model/approach in detail")
 
-| 项 | 值 |
-|---|---|
-| 数据 | 官方受控 WGS VCF（单样本，未定相，无功能注释） |
-| 参考基因组 | GRCh38 |
-| 变异规模 | 5,012,204 变异 / 4,740,790 PASS（QC 后全量统计） |
-| 临床输入 | 官方临床表型文档，提取 8 个 HPO 词条（含横纹肌肉瘤、早产/小于胎龄、复发性流产家族史） |
+A phenotype-driven, evidence-tiered pipeline for compound-heterozygous (comp-het) discovery in a singleton, unphased WGS VCF:
 
-## 2. Pipeline（S1→S6）
+1. **QC & normalization** — full-callset statistics (5,012,204 variants; 4,740,790 PASS; SNV/indel and zygosity profile); audited contig style (no `chr` prefix in the source VCF) with prefix conversion enforced at submission packaging.
+2. **Gene prioritization** — the three established mosaic variegated aneuploidy (MVA) genes ranked by disease-type concordance with the proband's HPO profile (rhabdomyosarcoma, failure to thrive / short stature, prematurity, small for gestational age, parental recurrent pregnancy loss): **BUB1B (MVA1), CEP57 (MVA2), TRIP13 (MVA3)**.
+3. **Per-gene region annotation** — for each gene region (±5 kb), all proband PASS variants were annotated against region-sliced **gnomAD v4.1** sites data (AF, AC/AN, nhomalt, faf95, CADD PHRED, REVEL, SpliceAI, VEP consequences) and **ClinVar** (significance, review status). Private alleles absent from gnomAD were annotated via **Ensembl VEP REST** against the MANE transcript (SIFT/PolyPhen, HGVS).
+4. **Comp-het calling** — within a candidate gene, require two heterozygous variants that are individually rare (AF < 0.01; loss-of-function candidates held to stricter population evidence including zero observed homozygotes), functionally consequential (VEP HIGH/MODERATE, with NMD-sensitivity for truncating variants), and phenotype-consistent. One stop-gain plus one private, dual-algorithm-deleterious missense in **BUB1B** satisfy all criteria; both map to the kinase domain.
+5. **Differential exclusion** — CEP57 and TRIP13 regions were processed through the identical pipeline and contained no coding-variant hits; both were excluded.
+6. **Packaging preflight** — a local scoring harness importing the official `evaluation.py` kernel verified CSV format, chromosome style, row pairing, and a full-match scoring path (mock-truth simulation) before submission.
 
-1. **QC**：全量统计（变异数、PASS 率、SNV/indel 构成、合子状态分布）；确认 contig 无 `chr` 前缀（提交打包时统一转换）。
-2. **基因优先级**：以 MVA（mosaic variegated aneuploidy）已知致病基因为主集——BUB1B（MVA1）、CEP57（MVA2）、TRIP13（MVA3），依据 OMIM 分型与表型吻合度排序。
-3. **区域注释**：对候选基因全基因区间（±5 kb）逐一提取先证者 PASS 变异，按基因区域远程拉取 gnomAD v4.1 sites 切片（AF/AC/AN、CADD、REVEL、SpliceAI、VEP 后果）并合并；ClinVar（GRCh38 VCF）全注释。
-4. **comp-het 判定**：在候选基因内寻找"双杂合 + 双稀有 + 双功能后果"组合：等位基因频率阈值 AF < 0.01（LoF 更严）、后果等级 HIGH/MODERATE、评分佐证（CADD/SpliceAI/REVEL；私有变异用 Ensembl VEP 的 SIFT/PolyPhen）。
-5. **鉴别排除**：CEP57、TRIP13 基因区间经同一管线注释后无编码区变异命中，均排除。
-6. **打包预检**：本地评分 harness（直接 import 官方 `evaluation.py` 内核）对提交 CSV 做 preflight + 满分路径模拟，确认格式/前缀/配对无误。
+## 2. Automation level (form Q11–Q12)
 
-## 3. Tools
+Hybrid. Filtering, annotation, and frequency/consequence triage were fully automated (bcftools/htslib pipeline). Final candidate selection and row construction were manually curated: review of ClinVar star level and disease-name concordance, gnomAD AF/nhomalt/faf95, consequence and NMD reasoning, differential-gene exclusion, and local scorer preflight.
 
-- bcftools/htslib 1.24（区域提取、注释合并、基因型质控）
-- gnomAD v4.1 sites（按基因区域切片）、ClinVar VCF（NCBI，2026-09 快照）
-- Ensembl VEP REST（私有变异后果与 HGVS）
-- 本地评分 harness（官方 evaluation.py 原内核 + 23 项单元测试）
+## 3. Data sources (form Q13–Q15)
 
-## 4. Interpretation criteria
+**Public data only** (in addition to the organizer-provided proband VCF):
 
-- ClinVar 致病性评级（含评审星级）为第一证据层；
-- gnomAD v4.1 基因组 AF 稀有性（含 faf95、人群最大 AF、nhomalt）为第二层；
-- 后果等级（stop-gain/missense/splice）+ NMD 敏感性（外显子位置）为第三层；
-- 错义变异需 ≥2 个独立预测算法一致（SIFT/PolyPhen）；
-- 表型一致性（BUB1B-MVA 与横纹肌肉瘤的已知关联）作为先验而非独立证据。
+| Source | Version/snapshot | Use |
+|---|---|---|
+| gnomAD sites, genomes | v4.1 (region slices) | AF/AC/AN, nhomalt, faf95, CADD, REVEL, SpliceAI, VEP consequences |
+| ClinVar VCF (GRCh38) | NCBI snapshot 2026-09 | Pathogenicity, review status, disease nomenclature |
+| Ensembl VEP REST | current | Consequence, SIFT/PolyPhen, HGVS for private alleles |
+| OMIM | via prior literature review | MVA gene–subtype assignment (BUB1B=MVA1, CEP57=MVA2, TRIP13=MVA3) |
+| Official Space source (rules, scoring kernel) | snapshot 2026-09-08 | Submission format, scoring verification |
 
-## 5. Limitations
+**Proprietary data**: none.
 
-- VCF 未定相且无父母样本：双杂合变异的 trans 配置基于超稀有双打击的贝叶斯推理，未直接定相验证；
-- 未做 read-backed 定相（数据集无 BAM，比对因磁盘与算力暂缓）；
-- 未评估结构变异/CNV（VCF 仅含 SNV/indel）；
-- epcr 为团队主观后验估计。
+## 4. Comp-het output capability (form Q16)
 
-## 6. LLM 使用披露（比赛条款要求）
+Yes — the approach outputs comp-het pairs natively: both variants are emitted on a single row (`chrom_1..alt_2` complete), consistent with the submission format.
 
-本项目的分析管线设计、代码实现与文档写作中使用了 LLM（Anthropic Claude Code，Processor 型服务，不用于模型训练）。所有生物学结论均经人工复核并溯源至证据台账（ClinVar / gnomAD / OMIM / Ensembl 等公开数据库），LLM 未产生未经数据库佐证的生物学断言。提交数据仅含变异坐标，不含原始测序数据。
+## 5. Secondary / incidental findings (form Q17)
 
-## 7. License
+v0 contains a single `primary` row; no secondary or incidental findings met inclusion criteria.
 
-本报告按比赛要求以 CC-BY 4.0 发布。
+## 6. Runtime & cost (form Q18)
+
+≈ 4 hours wall clock on a single laptop (macOS; bcftools/htslib 1.24). Downloads ≈ 220 MB (ClinVar release + per-gene gnomAD region slices). Compute cost negligible; one analyst with LLM assistance.
+
+## 7. Limitations
+
+- The VCF is unphased with no parental samples: the trans configuration of the comp-het pair is a Bayesian inference (two ultra-rare damaging hits in a recessive disease gene), not directly demonstrated; read-backed phasing was deferred (no BAM in dataset).
+- CNV/SV analysis not performed (callset is SNV/indel-only).
+- Genome-wide unbiased comp-het scanning was deferred in v0 (candidate-gene scan only) — the differential set covers all established MVA genes.
+- EPCR is a subjective posterior estimate.
+
+## 8. Generative-AI disclosure (form Q10, required)
+
+Commercially available generative AI (Anthropic Claude Code, Processor-type commercial API, not used for model training) was used for pipeline design, code implementation, analysis orchestration, and documentation. All biological claims were human-reviewed and traced to the tiered evidence ledger backed by public databases (ClinVar / gnomAD / OMIM / Ensembl); the model produced no biological assertion without database support. Variant-level candidate data (coordinates, genotypes, annotations) were processed by the tool; no raw VCF/FASTQ was transmitted, and no scoring feedback was given to the model.
+
+## 9. License
+
+This report is released under CC-BY 4.0 as required by the hackathon rules.

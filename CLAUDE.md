@@ -48,6 +48,8 @@ MVA 黑客松 2026 参赛项目（Sage Bionetworks × MVA Society × Hugging Fac
 - **数据集**（EV-0033~0035）：8×FASTQ(~79GB，未下载) + WGS VCF(315MB，GATK/GRCh38/未定相/无注释) + 临床表型 docx；无 BAM——read-backed 定相需自比对（磁盘不足，届时走云端）；HPO 8 词条已提取（EV-0036）
 - **VCF contig 无 chr 前缀**（1/2/…/X）；提交 CSV 必须 chr 前缀（模板与答案键风格，评分前缀敏感）——S6 打包时强制转换（EV-0034）
 - 本机网络：HF 官方域名走本地代理 `127.0.0.1:7890`（HTTPS_PROXY）；hf-mirror 可列目录但 gated 大文件 302 回官方 CDN；源码镜像获取已官方复核 7/7 一致（EV-0038）
+- **提交物一律英文**：官方无明文语言要求（源码 grep 零命中），但 methods 表单（xlsx）本身是英文结构化问卷、评审方为 SageBio/国际评委——对提交面的产物（CSV notes/报告/表单/视频）全部英文；中文仅限内部工作文档（CLAUDE.md/docs/台账）。官方 methods 表单（references/official/static/templates/）为 A 列问题 B 列作答结构，**A10 生成式 AI 披露为必填项**
+- gnomAD v4.1 无 af-only 发布；可行战术 = bcftools 经代理按基因区域远程拉切片（~70s/基因），v4.1 INFO 自带 AF/CADD/REVEL/SpliceAI/VEP；候选级全新变异注释走 Ensembl VEP REST；SnpEff 数据库下载被 Azure 阻断（Java 代理参数也无效）
 
 ## 工作方式
 
