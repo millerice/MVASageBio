@@ -1,0 +1,9 @@
+# LLM 使用日志（合规留档）
+
+> CLAUDE.md 红线 #3：所有涉及数据的 LLM 交互必须记录于此；T1 methods 报告的 LLM 披露行直接引用本日志。
+> 约束：仅向 Processor 型服务（不训练、不取得数据权利、限时留存）发送数据；不给模型输出点评分/反馈；使用 credits 前先读 credits 附加条款。
+
+| 日期 | 服务 / 模型 | 服务类型 | 发送的数据 | 用途 |
+|---|---|---|---|---|
+| 2026-09-02 ~ 09-03 | Anthropic Claude（Claude Code，商业 API） | Processor 型（商业 API，默认不用于训练） | 无基因组数据——仅官方公开页面（Space 源码 / 规则 / 公告 / 讨论区）与公开文献摘要 | 赛前摸底、证据台账建账、docs/00–06 与 CLAUDE.md 撰写 |
+| 2026-09-07 ~ 09-08 | Anthropic Claude（Claude Code，商业 API） | Processor 型（同上） | 无基因组数据——仓库文档 + 官方 Space 公开源码 | 项目状态盘点；G3 门槛补充；本地评分 harness 开发 |

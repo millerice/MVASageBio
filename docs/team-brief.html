@@ -1,0 +1,392 @@
+<title>MVA 黑客松团队简报</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F8F8FB;
+  --surface:#FFFFFF;
+  --ink:#221F33;
+  --ink-2:#57536E;
+  --ink-3:#8B86A0;
+  --line:#E3E1EE;
+  --line-2:#CFCBE2;
+  --accent:#6D51A4;
+  --accent-strong:#593F8C;
+  --accent-soft:#EFEAF8;
+  --good:#0E7A5F;
+  --good-soft:#E1F2EC;
+  --warn:#A0541B;
+  --warn-soft:#F9EDDD;
+  --band-a:color-mix(in srgb,var(--accent) 13%,var(--ground));
+  --band-b:color-mix(in srgb,var(--accent) 32%,var(--ground));
+  --band-c:color-mix(in srgb,var(--accent) 55%,var(--ground));
+  --serif:"Noto Serif SC","Songti SC",serif;
+  --sans:"Noto Sans SC","PingFang SC",sans-serif;
+  --mono:"IBM Plex Mono","SF Mono",monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#151222;
+    --surface:#1D1930;
+    --ink:#E9E7F4;
+    --ink-2:#ABA6C2;
+    --ink-3:#7E7898;
+    --line:#2E2947;
+    --line-2:#403A61;
+    --accent:#AC93DB;
+    --accent-strong:#C3AEE6;
+    --accent-soft:#2A2440;
+    --good:#54C7A6;
+    --good-soft:#17342C;
+    --warn:#E2A163;
+    --warn-soft:#392919;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#151222;
+  --surface:#1D1930;
+  --ink:#E9E7F4;
+  --ink-2:#ABA6C2;
+  --ink-3:#7E7898;
+  --line:#2E2947;
+  --line-2:#403A61;
+  --accent:#AC93DB;
+  --accent-strong:#C3AEE6;
+  --accent-soft:#2A2440;
+  --good:#54C7A6;
+  --good-soft:#17342C;
+  --warn:#E2A163;
+  --warn-soft:#392919;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:15.5px;
+  line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+}
+.page{max-width:880px;margin:0 auto;padding:0 28px 80px}
+a{color:var(--accent-strong);text-decoration-thickness:1px;text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+/* ---- masthead ---- */
+.masthead{padding-top:44px}
+.karyo{display:flex;gap:9px;align-items:flex-end;margin-bottom:26px;opacity:.92}
+.chr{width:11px;display:flex;flex-direction:column;gap:3px}
+.arm{border-radius:5px}
+.arm.t{height:var(--t)}
+.arm.b{height:var(--b)}
+.p1{background:linear-gradient(180deg,var(--band-a) 0 22%,var(--band-b) 22% 46%,var(--band-a) 46% 68%,var(--band-c) 68% 86%,var(--band-a) 86%)}
+.p2{background:linear-gradient(180deg,var(--band-b) 0 18%,var(--band-a) 18% 40%,var(--band-c) 40% 56%,var(--band-a) 56% 82%,var(--band-b) 82%)}
+.p3{background:linear-gradient(180deg,var(--band-a) 0 30%,var(--band-c) 30% 48%,var(--band-a) 48% 72%,var(--band-b) 72%)}
+.p4{background:linear-gradient(180deg,var(--band-c) 0 15%,var(--band-a) 15% 44%,var(--band-b) 44% 62%,var(--band-a) 62%)}
+.eyebrow{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 14px;
+}
+h1{
+  font-family:var(--serif);font-weight:900;font-size:clamp(28px,5vw,40px);
+  line-height:1.3;margin:0 0 16px;text-wrap:balance;letter-spacing:.01em;
+}
+.standfirst{font-size:16.5px;color:var(--ink-2);max-width:44em;margin:0 0 22px}
+.metarow{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 8px}
+.meta{
+  font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;
+  padding:4px 11px;border:1px solid var(--line);border-radius:999px;
+  color:var(--ink-2);background:var(--surface);
+}
+.meta b{color:var(--ink);font-weight:500}
+.meta.hot{border-color:var(--warn);color:var(--warn)}
+.meta.hot b{color:var(--warn)}
+hr.rule{border:0;border-top:1px solid var(--line);margin:34px 0}
+
+/* ---- sections ---- */
+section{margin-top:44px}
+.sec-eyebrow{
+  font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--accent);
+  margin:0 0 6px;font-variant-numeric:tabular-nums;
+}
+h2{
+  font-family:var(--serif);font-weight:700;font-size:22px;margin:0 0 14px;
+  text-wrap:balance;
+}
+.prose{max-width:44em}
+.prose p{margin:0 0 12px}
+.prose b{font-weight:700}
+
+/* verdict card */
+.verdict{
+  background:var(--surface);border:1px solid var(--line);border-radius:10px;
+  padding:20px 22px;
+}
+.verdict ul{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.verdict li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline}
+.vnum{
+  font-family:var(--mono);font-size:12px;color:var(--accent);
+  border:1px solid var(--line-2);border-radius:6px;padding:1px 7px;
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+
+/* chips */
+.chip{
+  display:inline-block;font-size:12px;font-weight:500;line-height:1;
+  padding:4px 9px;border-radius:999px;white-space:nowrap;vertical-align:2px;
+}
+.chip.good{background:var(--good-soft);color:var(--good)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.acc{background:var(--accent-soft);color:var(--accent-strong)}
+.ev{
+  font-family:var(--mono);font-size:11.5px;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+
+/* tables */
+.tablewrap{overflow-x:auto;margin:16px 0 6px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.6}
+th,td{padding:11px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+thead th{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--ink-3);
+  font-weight:500;border-bottom:1px solid var(--line-2);background:var(--ground);
+}
+tbody th{font-weight:700;white-space:nowrap;color:var(--ink)}
+td .q{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+
+/* findings */
+ol.findings{margin:0;padding:0;list-style:none;display:grid;gap:16px;counter-reset:fd}
+ol.findings>li{
+  counter-increment:fd;display:grid;grid-template-columns:44px 1fr;gap:14px;
+  max-width:46em;
+}
+ol.findings>li::before{
+  content:counter(fd,decimal-leading-zero);
+  font-family:var(--mono);font-size:20px;color:var(--accent);opacity:.55;
+  font-variant-numeric:tabular-nums;line-height:1.5;
+}
+ol.findings p{margin:4px 0 0}
+
+/* arch grid */
+.arch{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+@media (max-width:720px){.arch{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+.card h3{font-family:var(--serif);font-size:16px;margin:0 0 10px;font-weight:700}
+.card ul{margin:0;padding-left:1.2em}
+.card li{margin-bottom:8px}
+pre.tree{
+  font-family:var(--mono);font-size:12px;line-height:1.75;margin:0;
+  overflow-x:auto;color:var(--ink-2);
+}
+pre.tree b{color:var(--ink);font-weight:500}
+code.inline{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);color:var(--accent-strong);padding:1px 6px;border-radius:4px}
+
+/* action checklist */
+.action{display:grid;gap:2px;border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+.action label{
+  display:grid;grid-template-columns:22px 1fr;gap:14px;padding:14px 18px;
+  border-bottom:1px solid var(--line);cursor:pointer;align-items:baseline;
+}
+.action label:last-child{border-bottom:0}
+.action input{accent-color:var(--accent);width:16px;height:16px;transform:translateY(2px)}
+.action input:checked + span{color:var(--ink-3);text-decoration:line-through;text-decoration-color:var(--line-2)}
+.action b{font-weight:700}
+.action .sub{display:block;font-size:13px;color:var(--ink-2);font-weight:400}
+
+footer{margin-top:56px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--ink-2);max-width:46em}
+footer p{margin:0 0 8px}
+</style>
+<div class="page">
+
+<header class="masthead">
+  <div class="karyo" aria-hidden="true">
+    <div class="chr"><i class="arm t p1" style="--t:52px"></i><i class="arm b p3" style="--b:40px"></i></div>
+    <div class="chr"><i class="arm t p2" style="--t:50px"></i><i class="arm b p4" style="--b:36px"></i></div>
+    <div class="chr"><i class="arm t p3" style="--t:44px"></i><i class="arm b p1" style="--b:34px"></i></div>
+    <div class="chr"><i class="arm t p4" style="--t:42px"></i><i class="arm b p2" style="--b:30px"></i></div>
+    <div class="chr"><i class="arm t p1" style="--t:38px"></i><i class="arm b p4" style="--b:30px"></i></div>
+    <div class="chr"><i class="arm t p2" style="--t:36px"></i><i class="arm b p3" style="--b:26px"></i></div>
+    <div class="chr"><i class="arm t p1" style="--t:32px"></i><i class="arm b p2" style="--b:26px"></i></div>
+    <div class="chr"><i class="arm t p3" style="--t:30px"></i><i class="arm b p1" style="--b:22px"></i></div>
+    <div class="chr"><i class="arm t p4" style="--t:26px"></i><i class="arm b p2" style="--b:20px"></i></div>
+    <div class="chr"><i class="arm t p2" style="--t:24px"></i><i class="arm b p1" style="--b:18px"></i></div>
+    <div class="chr"><i class="arm t p1" style="--t:20px"></i><i class="arm b p3" style="--b:16px"></i></div>
+    <div class="chr"><i class="arm t p3" style="--t:18px"></i><i class="arm b p4" style="--b:14px"></i></div>
+  </div>
+  <p class="eyebrow">MVA Hackathon 2026 · Sage Bionetworks × MVA Society × Hugging Face × BEACON</p>
+  <h1>团队简报：为一名真实患儿，打两场比赛</h1>
+  <p class="standfirst">一名 MVA（镶嵌性斑驳非整倍体，全球在世患者少于 50 人）患儿的全基因组数据已经公开。两道题：找到她的致病变异（T1，机器评分）；为她找出已上市的重定位药物（T2，专家评审）。本页是 9 月 2 日完成的赛前摸底结论与打法，给每一位队友。</p>
+  <div class="metarow">
+    <span class="meta hot">截止 <b>2026-10-24 23:59 UTC</b></span>
+    <span class="meta">距截止 <b>≈ 7.5 周</b></span>
+    <span class="meta">奖金池 <b>$50,000</b></span>
+    <span class="meta">调研文档 <b>docs/00–06</b></span>
+    <span class="meta">证据台账 <b>24 EV</b></span>
+  </div>
+</header>
+
+<section>
+  <p class="sec-eyebrow">01 · 一句话战局</p>
+  <h2>先说结论</h2>
+  <div class="verdict">
+    <ul>
+      <li><span class="vnum">判断 1</span><div><b>T1 满分遍地，且这是官方设计预期</b>——自动分只是入场券，真正的分差在 methods 报告（评审单独打分）。<span class="chip warn">饱和</span></div></li>
+      <li><span class="vnum">判断 2</span><div><b>T2 是官方亲口承认的价值洼地</b>——主办方主动把配额从 1 次加到 3 次，并在公告里喊话"把打 T1 的劲头拿来"。我们主攻这里。<span class="chip good">主战场</span></div></li>
+      <li><span class="vnum">判断 3</span><div><b>创新 / 社区奖独立于名次</b>（$2k + $2k，评委裁量）——以患者为中心的交付物单独冲这条线。<span class="chip acc">第三路径</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <p class="sec-eyebrow">02 · 赛制</p>
+  <h2>两道题怎么玩</h2>
+  <div class="prose"><p>数据约 85 GB（单先证者 <span class="ev">PROBAND01</span>）：VCF + 可选 BAM/CRAM + 标准 HPO 表型词条，参考基因组 <span class="ev">GRCh38</span>（官方已确认）。数据 gated 申请、赛后 30 天内必须删除。</p></div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th></th><th>Track 1 · 变异预测</th><th>Track 2 · 药物重定位</th></tr></thead>
+      <tbody>
+        <tr><th>任务</th><td>从 WGS + 表型找回致病变异</td><td>基于变异机制提出<b>已上市药物</b>的重定位方案</td></tr>
+        <tr><th>评分</th><td>全自动：rank points + F-max</td><td>专家评审四维打分（下表）</td></tr>
+        <tr><th>交付物</th><td>预测 CSV + 方法报告 + GitHub</td><td>报告（含机制刻画）+ GitHub + <b>3 分钟视频</b></td></tr>
+        <tr><th>配额</th><td><b>每人独立 6 次</b>，取最高分</td><td><b>全队 3 次，只审最新一次</b></td></tr>
+        <tr><th>态势</th><td><span class="chip warn">满分饱和</span> 官方盖章"设计预期"</td><td><span class="chip good">参与不足</span> 官方公开拉人</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="prose"><p>奖金：冠军 $12k + $12k Claude credits；亚军 $7k + $7k；季军 $4k + $4k；创新·社区奖 $2k + $2k。评审至 11/24，11/25 公布。</p></div>
+</section>
+
+<section>
+  <p class="sec-eyebrow">03 · 情报质量</p>
+  <h2>为什么可以信这份判断</h2>
+  <div class="prose">
+    <p><b>赛制与评分规则来自官方 Space 源码逐行核实</b>——评分算法（<span class="ev">evaluation.py</span>）、提交表单校验、官方模板 CSV、Official Rules 全文，不是任何人的转述。</p>
+    <p><b>战况来自官方公告原文</b>——2026-09-01 刚发布的 T1 榜单公告，而非排行榜截图或社区传言（榜单原始数据存私有数据集，公开页面抓不到）。</p>
+    <p><b>每条关键结论已结构化入账</b>——<code class="inline">research/evidence.jsonl</code> 共 24 条 EV，带来源分级（Tier 0 官方源码 → Tier 4 论坛）与置信度；终版报告只准引用台账内编号，提交前由 AI 子代理对抗审计。</p>
+  </div>
+</section>
+
+<section>
+  <p class="sec-eyebrow">04 · 关键情报</p>
+  <h2>五个改变打法的发现</h2>
+  <ol class="findings">
+    <li><div><b>答案是一对复合杂合（comp-het）变异。</b>官方评分源码 docstring 明说 "clinically validated compound-heterozygous answer key"。两个变异<b>必须写在 CSV 同一行</b>才计满分，只中一个拿半分——T1 管线按隐性遗传设计。<span class="ev">EV-0001</span></div></li>
+    <li><div><b>T1 满分是官方设计预期。</b>官方 FAQ 与 9/1 公告：T1 是"基础赛道"，"两份满分卷可以很不同"，<b>methods 报告与自动分同等重要</b>。拿满分只是入场券。<span class="ev">EV-0014</span></div></li>
+    <li><div><b>T1 每次提交即时返回命中反馈。</b>full / partial（第几名命中）/ no match——6 次配额等于 6 次可校准的"神谕"查询，尽早试水，风险极低。<span class="ev">EV-0002/0004</span></div></li>
+    <li><div><b>LLM 合规已有官方裁决。</b>Sage 首席隐私合规官逐条回复：用 Claude 等商业 API 完全允许，条件是 Processor 配置（不训练、限时留存）+ methods 披露一行 + 不给输出点评分。我们可以放心全程 AI 辅助。<span class="ev">EV-0009</span></div></li>
+    <li><div><b>头号嫌疑基因：BUB1B = MVA 1 型</b>（注意：不是 2 型——2 型是 CEP57）。与 comp-het 隐性答案结构吻合；BUB1B 位于 chr15，数据到手先查。这是置信度 0.6 的待验证假设。<span class="ev">EV-0017 / EV-0024</span></div></li>
+  </ol>
+</section>
+
+<section>
+  <p class="sec-eyebrow">05 · 战略</p>
+  <h2>三线作战，精力按评审权重分配</h2>
+  <div class="prose"><p><b>主线 T2</b>：机制链条 = 变异 → BUBR1 功能缺失 → 纺锤体检查点失效 → 非整倍体风暴 → 表型 + 约 75% 癌症风险。核心难题即卖点：<b>功能缺失的肿瘤抑制蛋白无法直接给药激活，必须绕路</b>——这本身就是 Innovation 叙事。</p></div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>评审标准</th><th class="q">权重</th><th>我们的对策</th></tr></thead>
+      <tbody>
+        <tr><th>Scientific Rigor</th><td class="q">35%</td><td>每条结论 EV 编号可溯源 + 主动列反面证据 + 代码可复现</td></tr>
+        <tr><th>Potential Impact</th><td class="q">25%</td><td>落到患儿现实获益（癌症预防 / 监测优化），给出 MVA Society 线虫筛选体系可检验的预测</td></tr>
+        <tr><th>Innovation</th><td class="q">25%</td><td>LOF 绕路框架 + LINCS L1000 签名反转 + 多角度组合</td></tr>
+        <tr><th>Scalability</th><td class="q">15%</td><td>抽象成「N-of-1 罕见病重定位工作流」——管线即产品</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="prose">
+    <p><b>副线 T1（快速满分，不恋战）</b>：Exomiser 基线 + comp-het 过滤链 + 本地评分器（官方逻辑复刻）先验证再提交；满分后重仓 methods 报告（ACMG 分级、反式证据、HPO 匹配、次要发现的临床建议）。</p>
+    <p><b>第三路径 · 创新奖</b>：家庭版"结果解释器"（把诊断和药物假设翻译成家长能懂的话）、MVA 监测日历工具——素材与 T2 报告复用。</p>
+  </div>
+</section>
+
+<section>
+  <p class="sec-eyebrow">06 · 项目架构</p>
+  <h2>已就位的架子与规矩</h2>
+  <div class="arch">
+    <div class="card">
+      <h3>仓库结构</h3>
+      <pre class="tree"><b>MVASageBio/</b>
+├── CLAUDE.md          项目指令（合规/证据规则）
+├── docs/00–06         架构 · 调研×4 · 门槛 · 简报
+├── research/          证据台账 evidence.jsonl
+├── data/              【git 忽略】受控数据
+├── src/track1_variant/      T1 八阶段管线
+├── src/track2_repurposing/  T2 五阶段证据链
+├── submissions/       提交台账（配额/反馈留档）
+└── references/        链接与文献</pre>
+    </div>
+    <div class="card">
+      <h3>治理机制（对全员生效）</h3>
+      <ul>
+        <li><b>证据台账</b>：关键结论先入账再引用；终版报告只准引用 EV 编号（防编造引用）</li>
+        <li><b>准出门槛 G1–G8</b>：一阶段一验收、不跳门；终版提交前 AI 子代理对抗审查（claim 溯源 + 医学措辞）</li>
+        <li><b>合规红线 7 条</b>：基因组数据永不入 git / 永不外传；不联系患儿家庭；LLM 按 Processor 配置并披露；赛后 30 天删除 + 邮件确认；T2 只提名已上市药物；GitHub 评审时公开；产出无治疗建议措辞</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="sec-eyebrow">07 · 时间表</p>
+  <h2>七周半，八道门</h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th class="q">周</th><th>里程碑</th><th class="q">门槛</th></tr></thead>
+      <tbody>
+        <tr><td class="q">W1 · 9/2–9/8</td><td>数据下载；本地评分器；T1 管线 v0；首次提交试水</td><td class="q">G1</td></tr>
+        <tr><td class="q">W2 · 9/9–9/15</td><td><b>T1 满分</b>；BUB1B 假说对数据验证</td><td class="q">G2</td></tr>
+        <tr><td class="q">W3 · 9/16–9/22</td><td>T1 methods v1；T2 机制综述</td><td class="q">G3</td></tr>
+        <tr><td class="q">W4 · 9/23–9/29</td><td>T2 药物挖掘 → 候选长表</td><td class="q">G4</td></tr>
+        <tr><td class="q">W5 · 9/30–10/6</td><td>T2 报告 v1 + 对抗审查 #1</td><td class="q">G5</td></tr>
+        <tr><td class="q">W6 · 10/7–10/13</td><td>视频录制；<b>T2 提交 #1 占坑</b></td><td class="q">G6</td></tr>
+        <tr><td class="q">W7 · 10/14–10/20</td><td>T2 终版（余 1 次保险）；GitHub 公开自检</td><td class="q">G7</td></tr>
+        <tr><td class="q">赛后 30 天</td><td>数据删除 + 确认邮件</td><td class="q">G8</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <p class="sec-eyebrow">08 · 协作</p>
+  <h2>全队怎么配合</h2>
+  <div class="prose">
+    <p><b>官方规则直接决定战术</b>：T1 每人独立 6 次配额——<b>全员都提交</b>（多人多次 = 更高容错，榜上取队内最高），但必须<b>统一队名</b>才能归组；T2 全队 3 次、只审最新——<b>指定一人提交</b>，其他人不要重复交。计划 W6 占坑、W7 终版覆盖。</p>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>角色</th><th class="q">人数</th><th>职责</th><th class="q">对应门槛</th></tr></thead>
+      <tbody>
+        <tr><th>生信管线</th><td class="q">1–2</td><td>T1 全流程 + 本地评分器复刻</td><td class="q">G1–G2</td></tr>
+        <tr><th>机制研究</th><td class="q">1–2</td><td>疾病 / 通路文献 + 药物数据库挖掘 + 证据台账</td><td class="q">G3–G4</td></tr>
+        <tr><th>报告与呈现</th><td class="q">1</td><td>methods / 报告撰写 + 视频脚本与录制</td><td class="q">G5–G7</td></tr>
+        <tr><th>项目管理 / 合规</th><td class="q">1</td><td>提交台账、配额跟踪、删除清单、时间线守门</td><td class="q">G6–G8</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <p class="sec-eyebrow">09 · 行动</p>
+  <h2>本周就做这五件事</h2>
+  <div class="action">
+    <label><input type="checkbox" id="a1"><span><b>全员申请数据集权限</b><span class="sub">huggingface.co/datasets/SageBio/mva-hackathon-2026-data · gated，需同意规则；本地预留 ≥ 150 GB；审批周期未知，今天就办</span></span></label>
+    <label><input type="checkbox" id="a2"><span><b>定队名</b><span class="sub">T1 榜单归组 + 所有提交文件名前缀都用它</span></span></label>
+    <label><input type="checkbox" id="a3"><span><b>认领角色</b><span class="sub">见上表四类角色，认领后写进 README 状态区</span></span></label>
+    <label><input type="checkbox" id="a4"><span><b>指定 T2 提交人</b><span class="sub">全队唯一有 T2 提交权限的人</span></span></label>
+    <label><input type="checkbox" id="a5"><span><b>读完两份文档</b><span class="sub">README.md → docs/04-机会点与策略（10 分钟）；想深入再看 01-赛制摸底、03-疾病背景</span></span></label>
+  </div>
+</section>
+
+<footer>
+  <p><b>溯源声明</b>：本页每条关键结论对应 <span class="ev">research/evidence.jsonl</span> 中的 EV 编号，来源分级与置信度见台账；赛制细节全文在 <code class="inline">docs/01-赛制摸底.md</code>。</p>
+  <p><b>合规一句话</b>：数据不外传、不入公开仓库；赛后 30 天删除并邮件确认；一切产出避免治疗建议措辞——完整红线见 <code class="inline">CLAUDE.md</code>。</p>
+</footer>
+
+</div>
+<script>
+document.querySelectorAll('.action input[type=checkbox]').forEach(function(cb){
+  var k='mva-brief-'+cb.id;
+  try{if(localStorage.getItem(k)==='1')cb.checked=true;}catch(e){}
+  cb.addEventListener('change',function(){try{localStorage.setItem(k,cb.checked?'1':'0');}catch(e){}});
+});
+</script>
