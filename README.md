@@ -34,10 +34,11 @@
 
 - [x] 赛前调研（本目录 docs/）
 - [x] 目录骨架与工作流框架
-- [x] CLAUDE.md 项目指令 + 证据台账（30 条 EV）+ 里程碑准出门槛（G3 增机制链对抗审查）
+- [x] CLAUDE.md 项目指令 + 证据台账（41 条 EV）+ 里程碑准出门槛（G3 增机制链对抗审查）
 - [x] 本地评分 harness（`src/track1_variant/`：官方内核 import + 提交前校验，23 项测试全绿）+ LLM 使用日志建档
 - [x] **数据权限获批 + 选择性下载**（2026-09-08：VCF/tbi/临床表型 docx/README 共 302.8MB，sha256 校验一致；FASTQ 79GB 暂缓——磁盘与定相策略见 EV-0033）
-- [ ] T1 流水线 → 满分提交
+- [x] **T1 v0 候选锁定**（2026-09-08：BUB1B comp-het 双变异，ClinVar P/LP + 私有错义；CEP57/TRIP13 排除；本地 scorer 满分预检；方法报告 `reports/t1_methods_v0.md`；提交留档 `submissions/`）——待线上首次提交
+- [ ] T1 线上提交 → 满分确认
 - [ ] T2 报告 + 视频
 
 ## 合规速记（违者出局项）

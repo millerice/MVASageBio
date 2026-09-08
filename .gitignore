@@ -1,6 +1,7 @@
 # 受控数据：绝不入库（比赛规则：不得转发基因组数据）
 data/raw/
 data/processed/
+data/external/
 
 # 基因组级文件兜底拦截（即使被挪出 data/ 也拦）
 *.vcf
@@ -39,3 +40,6 @@ venv/
 *.parquet
 .DS_Store
 tmp/
+
+# 本地工具链（SnpEff 等，体积大且可重装）
+tools/

@@ -7,3 +7,4 @@
 |---|---|---|---|---|
 | 2026-09-02 ~ 09-03 | Anthropic Claude（Claude Code，商业 API） | Processor 型（商业 API，默认不用于训练） | 无基因组数据——仅官方公开页面（Space 源码 / 规则 / 公告 / 讨论区）与公开文献摘要 | 赛前摸底、证据台账建账、docs/00–06 与 CLAUDE.md 撰写 |
 | 2026-09-07 ~ 09-08 | Anthropic Claude（Claude Code，商业 API） | Processor 型（同上） | 无基因组数据——仓库文档 + 官方 Space 公开源码 | 项目状态盘点；G3 门槛补充；本地评分 harness 开发 |
+2026-09-08 | Anthropic Claude（Claude Code，商业 API） | Processor 型（同上） | 变异级候选数据（坐标/基因型/注释结果）；不含原始 VCF/FASTQ；无评分反馈给予模型输出 | T1 v0：候选基因区域注释、comp-het 判定、证据台账与方法报告撰写

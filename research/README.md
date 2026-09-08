@@ -45,5 +45,6 @@
 | competition | EV-0025 ~ 0030 | 评分算法细节（排序规则 / full-match 判定 / F-max 扫描 / 变异规范化 chr 前缀敏感）与提交表单硬校验（GitHub URL + 报告必填）、答案键存放位置；全部 Tier 0，经 hf-mirror 镜像获取、SHA256 留档 `references/official/README.md` |
 | competition | EV-0031 ~ 0032 | 数据访问获批与门禁条款留档；删除确认邮箱两官方来源不一致（conflict → 双发兜底） |
 | competition / disease | EV-0033 ~ 0038 | 数据集勘察：构成/无 chr 前缀陷阱/GRCh38+GATK 元数据/8 个 HPO 词条（含父母流产史）；表型对 BUB1B 假说的独立支持（inference）；镜像源码官方复核 7/7 |
+| disease / competition | EV-0039 ~ 0041 | **T1 破案**：BUB1B 无义杂合（ClinVar P/LP·MVA1）+ 私有错义杂合 comp-het 候选（公开版已脱敏至基因级，完整版在受控私有台账 `data/processed/evidence_private.jsonl`）；gnomAD v4.1 远程切片策略与基础设施事实 |
 
 `therapy` 域条目随 T2 的 M1–M4 阶段补充（候选药物 schema：drug / target / mechanism / evidence / counter_evidence / pediatric_relevance / confidence / status）。
