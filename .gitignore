@@ -1,0 +1,41 @@
+# 受控数据：绝不入库（比赛规则：不得转发基因组数据）
+data/raw/
+data/processed/
+
+# 基因组级文件兜底拦截（即使被挪出 data/ 也拦）
+*.vcf
+*.vcf.gz
+*.vcf.gz.tbi
+*.vcf.gz.csi
+*.bam
+*.bam.bai
+*.cram
+*.crai
+*.fastq
+*.fastq.gz
+*.fq.gz
+*.sam
+*.ped
+*.bim
+*.fam
+
+# 凭证与环境
+.env
+*.token
+hf_token*
+HF_TOKEN*
+
+# Claude Code 本地配置（不入公开仓库）
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 大文件与临时产物
+*.h5
+*.parquet
+.DS_Store
+tmp/
