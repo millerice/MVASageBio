@@ -1,0 +1,10 @@
+drug_name	lever	rationale_ev	expected_status	notes
+niacinamide (nicotinamide)	L1_stability	EV-0066;EV-0067	approved_fda	FDA 记录用 USP 名 niacinamide（同物异名）；上市剂型=含该活性成分的注射用复合维生素（含儿科）；单方制剂为糙皮病时代老药；SIRT2-BubR1 轴的已上市入口，证据平移距离（NMN→nicotinamide）须如实标注
+NMN (nicotinamide mononucleotide)	L1_stability	EV-0066	not_approved	预期非批准药（膳食补充剂身份）——核验以文档化排除理由
+sirolimus	L2_mtorc1	EV-0057	approved_fda	mTORC1 抑制轴；最大反面证据=儿童免疫抑制/生长
+everolimus	L2_mtorc1	EV-0057	approved_fda	mTORC1 抑制轴；有儿科肿瘤用药经验（TSC-SEGA）
+chloroquine	L3_aneuploidy_clearance	EV-0063;EV-0065	approved_fda	Tang 2011 自噬抑制-非整倍体选择性清除；MVA 模型 MEF 相关证据为 AICAR/17-AAG 线（氯喹为同文命中）；儿童长期安全性=反面证据
+hydroxychloroquine	L3_aneuploidy_clearance	EV-0063;EV-0065	approved_fda	同上；视网膜毒性须列
+metformin	L3_energy_stress	EV-0063	approved_fda	AMPK/能量应激轴（AICAR 的已上市同类方向）；与 AICAR 的接线需补文献 EV 后才可入候选表——先核验上市状态
+tanespimycin (17-AAG)	L3_aneuploidy_clearance	EV-0065	not_approved	文档化排除：HSP90 抑制剂零 FDA 批准（FDA OOPD 'Not FDA Approved'）
+AICAR	L3_energy_stress	EV-0063;EV-0065	not_approved	文档化排除：无 FDA 批准
