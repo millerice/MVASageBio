@@ -1,0 +1,144 @@
+{
+  "version": "0.1",
+  "updated": "2026-09-08",
+  "note": "T2 机制链（M1 产出，机器可读）。granularity=public 的 claim 可直接进公开 repo/报告；granularity=report 的 claim 在提交报告（官方私密渠道）中展开为 HGVS+残基级，公开仓库保持基因/结构域级。validate_chain.py 强制：每条 ev_refs 必须存在于 research/evidence.jsonl；引用 conflict 状态条目必须带 conflict_note。",
+  "nodes": [
+    {
+      "id": "N1",
+      "stage": "genotype",
+      "claim": "Proband carries a biallelic BUB1B genotype: one truncating (nonsense) allele and one missense allele in the kinase domain (compound heterozygous) — confirmed as the official Track 1 answer (full match).",
+      "claim_type": "fact",
+      "granularity": "report",
+      "ev_refs": ["EV-0039", "EV-0040", "EV-0042"]
+    },
+    {
+      "id": "N2",
+      "stage": "allele1_null",
+      "claim": "The nonsense allele is a functional null: it lies in an NMD-sensitive exon, and truncating BUB1B transcripts are degraded by nonsense-mediated decay in MVA patients (patient-derived evidence).",
+      "claim_type": "fact",
+      "granularity": "public",
+      "ev_refs": ["EV-0039", "EV-0048"]
+    },
+    {
+      "id": "N3",
+      "stage": "allele2_hypomorph",
+      "claim": "The missense allele is best interpreted as a protein-destabilizing hypomorph: MVA1 kinase-domain missense alleles act primarily by lowering BUBR1 protein abundance (5-10x, proteasomal clearance, HSP90-dependent folding), not by abolishing catalysis; kinase activity itself is dispensable for checkpoint signaling.",
+      "claim_type": "inference",
+      "granularity": "report",
+      "ev_refs": ["EV-0040", "EV-0044", "EV-0045"],
+      "counter_note": "Suijkerbuijk evidence is from transfected-overexpression systems; endogenous patient-cell validation is limited; kinase-activity minority view (Mao 2003) exists [EV-0044]."
+    },
+    {
+      "id": "N4",
+      "stage": "genotype_architecture",
+      "claim": "This genotype matches the literature rule for surviving MVA1: a truncating/null allele paired with a missense allele in or near the kinase domain; two complete nulls have never been reported.",
+      "claim_type": "fact",
+      "granularity": "public",
+      "ev_refs": ["EV-0047"]
+    },
+    {
+      "id": "N5",
+      "stage": "bubr1_insufficiency",
+      "claim": "Net consequence is BUBR1 protein insufficiency in a dose-dependent regime: ~13% expression preserves segregation fidelity whereas ~6% causes mis-segregation in most cells (cell-level thresholds); mouse dose-response gives small stature, cancer predisposition, progeroid features.",
+      "claim_type": "fact",
+      "granularity": "public",
+      "ev_refs": ["EV-0045", "EV-0046", "EV-0050"]
+    },
+    {
+      "id": "N6",
+      "stage": "sac_failure",
+      "claim": "Insufficient BUBR1 weakens the spindle assembly checkpoint (MCC-mediated APC/C inhibition), shortening mitosis with premature sister chromatid separation (PSCS).",
+      "claim_type": "fact",
+      "granularity": "public",
+      "ev_refs": ["EV-0044", "EV-0049", "EV-0055"]
+    },
+    {
+      "id": "N7",
+      "stage": "aneuploidy",
+      "claim": "Checkpoint leakage produces mosaic variegated aneuploidy — random gains/losses across ~25-50% of cells; affected embryos show >50% aneuploid cells.",
+      "claim_type": "fact",
+      "granularity": "public",
+      "ev_refs": ["EV-0049", "EV-0055"]
+    },
+    {
+      "id": "N8",
+      "stage": "phenotype_growth",
+      "claim": "Aneuploidy burden triggers massive progenitor apoptosis depleting progenitor pools -> tissue hypoplasia -> IUGR/SGA, failure to thrive, short stature (proband HPO: HP:0004322, HP:0001508, SGA; growth retardation is the most frequent MVA feature, 93.5%).",
+      "claim_type": "fact",
+      "granularity": "public",
+      "ev_refs": ["EV-0050", "EV-0051", "EV-0055"],
+      "conflict_note": "EV-0051's conflict status concerns its cancer-penetrance figure, not the growth-retardation frequency (93.5%) used here; growth figure is a direct Table-1 tally."
+    },
+    {
+      "id": "N9",
+      "stage": "phenotype_rpl",
+      "claim": "Parental recurrent pregnancy loss is mechanistically consistent: BubR1-null embryos die E7.5-E13.5 with MVA/PSCS; SAC insufficiency is predicted to underlie a significant fraction of human RPL; recurrence is 25% per conception (autosomal recessive carriers).",
+      "claim_type": "fact",
+      "granularity": "public",
+      "ev_refs": ["EV-0049", "EV-0056"],
+      "counter_note": "RPL attribution is the authors' inference, not proven [EV-0056]."
+    },
+    {
+      "id": "N10",
+      "stage": "phenotype_cancer",
+      "claim": "Cancer predisposition: Wilms tumor most frequent, rhabdomyosarcoma second (proband's index feature, embryonal type in original BUB1B families); overall malignancy reported at 38.7% (12/31 case series) with sources ranging up to ~75%.",
+      "claim_type": "fact",
+      "granularity": "public",
+      "ev_refs": ["EV-0051", "EV-0052"],
+      "conflict_note": "Cancer penetrance figures conflict across sources (38.7% case-series tally vs ~75% Orphanet) [EV-0051]; report must present the range with sourcing."
+    },
+    {
+      "id": "N11",
+      "stage": "phenotype_progeroid",
+      "claim": "BubR1 insufficiency drives a progeroid/sarcopenia axis (muscle wasting, dwarfism, cataracts); sarcopenia correlates with mTORC1 hyperactivity and p19Arf-dependent senescence — a druggable parallel axis distinct from chromosome segregation.",
+      "claim_type": "fact",
+      "granularity": "public",
+      "ev_refs": ["EV-0057"],
+      "counter_note": "mTORC1 link established in mice only; no pediatric MVA1 muscle data [EV-0057]."
+    },
+    {
+      "id": "N12",
+      "stage": "phenotype_novel",
+      "claim": "Proband's nephrocalcinosis has no published MVA/BUB1B association (literature zero-hit) — reported as a novel/unexplained observation, not a mechanism claim.",
+      "claim_type": "hypothesis",
+      "granularity": "public",
+      "ev_refs": ["EV-0054"],
+      "counter_note": "Negative literature search does not exclude an association; nephrocalcinosis may be an independent comorbidity (e.g., prematurity-related) rather than MVA1 biology — explicitly not claimed as mechanism."
+    },
+    {
+      "id": "N13",
+      "stage": "systemic_stress",
+      "claim": "Beyond tumor susceptibility, MVA entails cellular and systemic stress including a chronic immune response (2024 authoritative review) — a potentially modifiable disease component distinct from chromosome segregation.",
+      "claim_type": "fact",
+      "granularity": "public",
+      "ev_refs": ["EV-0061"],
+      "counter_note": "Which clinical manifestations (growth failure severity, symptom burden) are attributable to systemic immune activation in MVA1 patients is not established."
+    },
+    {
+      "id": "N14",
+      "stage": "druggable_axis_stability",
+      "claim": "BubR1 protein abundance is controlled by the SIRT2–NAD+ deacetylase axis: SIRT2 overexpression or NAD+ precursor (NMN) treatment raises BubR1 abundance in vivo — a pharmacological route to the protein-insufficiency node (N5), complementing the genetic proof that raising BubR1 is protective.",
+      "claim_type": "fact",
+      "granularity": "public",
+      "ev_refs": ["EV-0066", "EV-0067"],
+      "counter_note": "NMN evidence is from BubR1-insufficient aging mice, not MVA missense mutants; NMN is not an approved drug — approved NAD+ precursors would carry an evidence-transfer gap."
+    }
+  ],
+  "edges": [
+    ["N1", "N2"],
+    ["N1", "N3"],
+    ["N2", "N5"],
+    ["N3", "N5"],
+    ["N1", "N4"],
+    ["N5", "N6"],
+    ["N6", "N7"],
+    ["N7", "N8"],
+    ["N5", "N8"],
+    ["N6", "N9"],
+    ["N7", "N10"],
+    ["N5", "N11"],
+    ["N8", "N12"],
+    ["N7", "N13"],
+    ["N5", "N14"]
+  ]
+}
