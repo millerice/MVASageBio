@@ -12,7 +12,7 @@
 
 ## 0. Generative-AI disclosure (required)
 
-> **Recorded tools: Anthropic Claude via Claude Code; OpenAI Codex desktop for subsequent review and revisions.**
+> **Recorded tools: Anthropic Claude via Claude Code (initial workflow); OpenAI Codex desktop (subsequent review and revisions); DeepSeek and Qwen API sessions plus one manual ChatGPT (Deep Research) session for independent cross-review — public-tier materials only.**
 
 The initial workflow used Claude Code for variant triage, literature search assistance, coding,
 and drafting. The usage log records that workflow as using a commercial Anthropic API plan.
@@ -22,14 +22,23 @@ private target scripts and historical notes containing variant-level information
 exclusively public-material workflow. Safeguards: private material remained within
 participant-controlled compute environments; LLM services were restricted to Processor-type terms (no
 training, no data-rights acquisition, time-limited retention) as a selection condition, and no third
-party was granted data access (per-service term verification remains the open item noted below).
+party was granted data access. Per-service term verification is closed as of 2026-09-17:
+API providers (Anthropic commercial API, DeepSeek, Qwen) were checked against their published
+terms at selection and at each review batch, and the OpenAI account used for the ChatGPT and
+Codex sessions had account Data Controls (model-training opt-in) disabled, confirmed against the
+account settings by the participant (account-side settings are participant-verified, not
+independently auditable; per-session Codex model versions were not logged).
 Server computations were executed by the participant.
 The ledger is the permitted source for scientific report claims; automated citation checks do not
-replace source-level human review. Final independent review, the complete interaction inventory,
-and account-specific service-term verification remain pending. This draft does not attest that all
-claims have received completed human verification or that every service session has passed a
-Processor-terms audit. The initial log records no submission of model outputs for vendor scoring
-or feedback. Data interactions and remaining disclosure checks are recorded in `docs/llm-usage.log`.
+replace source-level human review. Independent cross-review was completed on 2026-09-17 —
+citation audit, mechanism-chain/ledger consistency, rules-language, medical-wording, and
+predictive-validity reviews across the services above, with human adjudication of every
+adopt/reject decision and documented rejections. The claims registry (`research/report_claims.tsv`)
+records all report claims as independently reviewed, with a hash-bound attestation
+(`research/review_attestations.jsonl`). Residual limitation, stated plainly: the independent
+reviewers were LLM services from providers other than the drafting tools, plus participant
+adjudication — not external domain-expert peer review. The log records no submission of model
+outputs for vendor scoring or feedback. Data interactions are inventoried in `docs/llm-usage.log`.
 
 ## Abstract (form A17; strengths and limitations included)
 

@@ -65,7 +65,7 @@
 | B1 | R3-d F4 | GitHub URL 插入 §5 | 报告冻结（附"评审开始时公开"注记） |
 | B2 | R3-d F5 | 3 分钟视频链接 | M4 视频完成后、冻结前 |
 | B3 | R3-d F6 | 数据集官方引用 | 提交时（Synapse 页引用） |
-| B4 | R3-d F3 | §0 披露 "remain pending" 措辞收尾 | R1–R5 + attestations 全闭环后 |
+| B4 | R3-d F3 | §0 披露 "remain pending" 措辞收尾 | ✅ 2026-09-17 完成（用户确认 OpenAI Data Controls 关闭后执行；见变更记录终收条） |
 | B5 | R5-d⑤ | §7 接口规范表（输入→输出+人工介入时长） | 可选增强，冻结前有余力则做 |
 | B6 | R5-d 影响 | "未给剂量/终点/试验设计" | 受医学措辞红线约束不展开；§3 实验室证伪步骤已是合规上限（见驳回 #2） |
 
@@ -250,3 +250,10 @@ attestation + 服务条款核验。
   R1 会话账号侧条款核验仍开（B4）；attestation 严格绑定当前报告字节——
   **B1–B4 任何报告改动后须对新版本重新审签**）。`validate_all.py --final` **首次全绿**
   （0 failing gates）。
+- 2026-09-17 B4 收尾：用户确认 OpenAI 账号 Data Controls（训练）已关闭后，报告 §0 三处重写
+  （Recorded tools 补交叉审核服务 DeepSeek/Qwen/ChatGPT；per-service 条款核验收口——API 提供商
+  按发布条款核 + OpenAI 账号侧参赛者自证，残余：不可独立审计、Codex 逐轮模型版本未记录；
+  "remain pending" → 交叉审核已完成 + 残余局限声明「LLM 审者 + 人工裁决，非领域专家同行评审」）。
+  git diff 确认改动仅限 §0（科学内容/锚点/摘要零改动）→ attestation 追加重审签行
+  （sha256 2da17800…035cc，diff-scope-verified）；llm-usage.log R1 行补记 + 收尾节。
+  `validate_all.py --final` 全绿。**B1–B6 中 B4 关闭；剩余 B1/B2/B3 冻结时点项 + B5 可选。**

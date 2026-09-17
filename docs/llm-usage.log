@@ -64,4 +64,16 @@ diff、摘要词数、基线失配），复现全部一致；经用户授权后�
 2026-09-17 | deepseek-chat via api.deepseek.com（交叉审核 runner） | Processor 型（CROSS_DEEPSEEK_TERMS_ACK 已确认核对） | 公开级材料（report.md；无受控数据） | 交叉审核 R4，输出 data/processed/cross_review/R4_deepseek-chat_20260917-1833.md |
 2026-09-17 | deepseek-chat via api.deepseek.com（交叉审核 runner） | Processor 型（CROSS_DEEPSEEK_TERMS_ACK 已确认核对） | 公开级材料（report.md；无受控数据） | 交叉审核 R4，输出 data/processed/cross_review/R4_deepseek-chat_20260917-1836.md |
 2026-09-17 | deepseek-chat via api.deepseek.com（交叉审核 runner） | Processor 型（CROSS_DEEPSEEK_TERMS_ACK 已确认核对） | 公开级材料（report.md；无受控数据） | 交叉审核 R4，输出 data/processed/cross_review/R4_deepseek-chat_20260917-1842.md |
-2026-09-17 | ChatGPT Deep Research（用户手动网页会话） | Processor 型前提：R1 操作卡第 1 步要求用户确认 Data controls 关闭训练后执行；账号侧配置未独立核验 | 公开级白名单四文件（r1_upload/: 终版 report.md、公开台账 evidence.jsonl、plan.md、R1_prompt_only.txt；无受控数据、无私有附录） | 交叉审核 R1 引文核验，输出 R1_output_chatgpt_2026-09-17.md；未对模型输出打分/反馈
+2026-09-17 | ChatGPT Deep Research（用户手动网页会话） | Processor 型前提：R1 操作卡第 1 步要求用户确认 Data controls 关闭训练后执行；账号侧配置未独立核验；【2026-09-17 补记】用户确认账号 Data Controls（训练）已关闭，该项核验完成（参赛者自证，不可独立审计） | 公开级白名单四文件（r1_upload/: 终版 report.md、公开台账 evidence.jsonl、plan.md、R1_prompt_only.txt；无受控数据、无私有附录） | 交叉审核 R1 引文核验，输出 R1_output_chatgpt_2026-09-17.md；未对模型输出打分/反馈
+
+## 2026-09-17 B4 收尾：服务条款核验收口（Claude Code）
+
+服务：Anthropic Claude（Claude Code，商业 API，Processor 型）。本节为披露收尾记录，
+无新的数据交互（未读取受控数据，未连接服务器，未改动科学内容）。
+用户确认 OpenAI 账号 Data Controls（模型训练 opt-in）已关闭——覆盖该账号下的 ChatGPT
+会话（含 R1 引文核验）与 Codex 桌面会话；API 提供商（Anthropic 商业 API / DeepSeek /
+Qwen）条款已在选用与各审核批次时按发布条款核对（见上表 TERMS_ACK 各行）。
+残余（已写入报告 §0 与 attestation 局限声明）：账号侧设置为参赛者自证、不可独立审计；
+Codex 桌面会话逐轮模型版本未记录。前文各节"条款核验仍需终审/待用户核实"的待办至此关闭。
+报告 §0 相应重写（remain pending → 已完成 + 残余局限），attestation 重审签至
+sha256 2da17800…035cc，validate_all --final 全绿。
