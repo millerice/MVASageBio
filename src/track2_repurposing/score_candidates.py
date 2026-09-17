@@ -1,126 +1,142 @@
 #!/usr/bin/env python3
-"""M2 候选药物评分 —— drug_pool.tsv × docs/09 档案 → 排序候选表（可复现）。
-
-用法:
-    python3 src/track2_repurposing/score_candidates.py
-
-输入:  data/processed/track2/drug_pool.tsv   （build_drug_pool.py 产出，gitignored）
-       docs/09-M2候选档案.md                 （人工策展的评分依据，见下方 CANDIDATES 溯源）
-输出:  data/processed/track2/candidates_ranked.tsv（gitignored）+ stdout 摘要
-
-评分维度（0–3 整数，依据与 EV 溯源内嵌；总分 = 加权和）:
-  mechanism_match  0-3   与机制链 node 的连线强度（3=直打核心节点且有人体/模型直接证据）
-  testable_pred    0-3   可检验预测的可落地性（3=有现成模型平台 + 可测读出）
-  evidence_human   0-3   已上市端人体证据强度（3=RCT 级）
-  safety_margin    0-3   儿科慢程使用的安全性余地（3=广泛儿科经验；反向计分负担）
-  counter_weight   0-3   反面证据的可反驳性（3=主要反面可在设计层面规避）
-
-权重: mechanism_match ×2, 其余 ×1 —— 机制匹配是 T2 评审的根基（Rigor 35%）。
-精选规则: top-N（N≤5）且每候选独立机制轴；同轴次名降为 alternate。
-"""
-
+"""Traceable research-priority ranking; never an efficacy or treatment score."""
 from __future__ import annotations
-
-import csv
+import argparse, csv, io, json, sys
+from datetime import date
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
-POOL = REPO / "data" / "processed" / "track2" / "drug_pool.tsv"
-OUT = REPO / "data" / "processed" / "track2" / "candidates_ranked.tsv"
-
-# 人工策展评分（依据 docs/09-M2候选档案.md §2/§3；每字段带一句话理由 + EV）
-CANDIDATES = {
-    "niacinamide (nicotinamide)": dict(
-        axis="L1_protein_stability",
-        mechanism_match=3,  # 唯一直打 N5（BUBR1 蛋白不足）[EV-0066,0067]
-        testable_pred=3,    # 蛋白丰度读出直接可测 + 线虫平台 [EV-0023,0080]
-        evidence_human=3,   # ONTRAC III 期 RCT [EV-0070]
-        safety_margin=3,    # OTC/注射复合维生素儿科剂型 [EV-0069]
-        counter_weight=2,   # NMN→niacinamide 平移距离须明示 [EV-0066 counter]
-        rationale="SIRT2–NAD+ axis raises BubR1 abundance in vivo; approved precursor with RCT precedent",
-    ),
-    "everolimus": dict(
-        axis="L2_mtorc1_sarcopenia",
-        mechanism_match=2,  # N11 轴小鼠级 [EV-0057]
-        testable_pred=2,    # daf-15/Raptor 可操作 [EV-0074,0081]
-        evidence_human=3,   # 儿科起病 15.5 年队列 + 标签≥1 岁 [EV-0079,0078]
-        safety_margin=1,    # 代谢 ADR 谱 + 免疫抑制 [EV-0079 counter]
-        counter_weight=2,   # 生长终点空白=诚实开放问题 [EV-0059,0079]
-        rationale="mTORC1 hyperactivity-sarcopenia axis; deepest pediatric mTORi experience",
-    ),
-    "metformin": dict(
-        axis="L4_metabolic_systemic_stress",
-        mechanism_match=2,  # N13 + 非整倍体代谢脆弱 [EV-0061,0072]
-        testable_pred=3,    # 线虫跨物种先例 + 生物标志物 [EV-0073,0080]
-        evidence_human=2,   # 儿科广泛使用（PCOS 等），非 RCT 于本轴
-        safety_margin=3,    # 儿科长期安全性轮廓成熟
-        counter_weight=2,   # 与 L3 清除方向张力按场景拆分 [EV-0063 vs 0072/0073]
-        rationale="Approved AMPK/energy-state modulator; cross-species aneuploidy-model protection",
-    ),
-    "chloroquine": dict(
-        axis="L3_aneuploidy_clearance",
-        mechanism_match=3,  # 唯一 MVA 模型直接证据 [EV-0063]
-        testable_pred=2,    # 患者细胞可测；体内肿瘤终点难 [EV-0063 counter]
-        evidence_human=1,   # 老药但本轴无人体试验
-        safety_margin=1,    # 视网膜毒性/儿科长期负担
-        counter_weight=2,   # 细胞级证据局限明确可述
-        rationale="Selective anti-aneuploid proliferation, validated on BubR1H/H MVA-model MEFs",
-    ),
-    "sirolimus": dict(
-        axis="L2_mtorc1_sarcopenia",
-        mechanism_match=2,  # 同 everolimus 轴 [EV-0057]
-        testable_pred=2,    # 同轴 [EV-0074]
-        evidence_human=2,   # Becker 队列含 sirolimus 4 例 [EV-0079]
-        safety_margin=1,    # 同轴免疫抑制负担
-        counter_weight=1,   # 同轴且儿科经验弱于 everolimus
-        rationale="Same-axis alternate to everolimus (pediatric experience shallower)",
-    ),
-    "hydroxychloroquine": dict(
-        axis="L3_aneuploidy_clearance",
-        mechanism_match=2,  # 同轴衍生物，零 MVA 模型数据 [EV-0063]
-        testable_pred=2,    # 同轴
-        evidence_human=1,   # 本轴无人体试验
-        safety_margin=2,    # 视网膜毒性低于 CQ
-        counter_weight=2,   # 轴内首选保留有直接证据的 CQ
-        rationale="Tolerability-optimized alternate (no MVA-model data)",
-    ),
+INPUT = REPO / "research/drug_priority_scores.tsv"
+LEDGER = REPO / "research/evidence.jsonl"
+PRIVATE_LEDGER = REPO / "data/processed/evidence_private.jsonl"
+POOL = REPO / "data/processed/track2/drug_pool.tsv"
+PRODUCTS = REPO / "research/drug_product_status.tsv"
+OUT = REPO / "data/processed/track2/candidates_ranked.tsv"
+BASE_WEIGHTS = {"disease_model_evidence": 3, "mechanism_target_engagement": 3,
+                "testability": 2, "human_exposure_precedent": 1,
+                "pediatric_chronic_feasibility": 1, "translation_distance": -2,
+                "counter_evidence_severity": -2}
+SCENARIOS = {
+    "base": BASE_WEIGHTS,
+    "rigor_heavy": {**BASE_WEIGHTS, "disease_model_evidence": 4,
+                    "mechanism_target_engagement": 4, "translation_distance": -3},
+    "feasibility_heavy": {**BASE_WEIGHTS, "testability": 3,
+                          "pediatric_chronic_feasibility": 2},
+    "no_human_precedent": {**BASE_WEIGHTS, "human_exposure_precedent": 0},
+    "counter_heavy": {**BASE_WEIGHTS, "counter_evidence_severity": -3},
 }
+SCORE_FIELDS = tuple(BASE_WEIGHTS)
 
-WEIGHTS = {"mechanism_match": 2, "testable_pred": 1,
-           "evidence_human": 1, "safety_margin": 1, "counter_weight": 1}
+def load_evidence():
+    out = {}
+    for path in (LEDGER, PRIVATE_LEDGER):
+        if path.exists():
+            for line in path.read_text(encoding="utf-8").splitlines():
+                if line.strip():
+                    entry = json.loads(line); out[entry["id"]] = entry
+    return out
 
+def score(row, weights):
+    return sum(int(row[field]) * weights[field] for field in SCORE_FIELDS)
 
-def main() -> None:
-    pool = {}
-    with open(POOL) as f:
-        for row in csv.DictReader(f, delimiter="\t"):
-            pool[row["drug_name"]] = row
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--check-only", action="store_true",
+                        help="Compare the saved ranking with current inputs without writing outputs")
+    args = parser.parse_args(argv)
+    if not POOL.exists():
+        sys.exit(f"missing {POOL}; run build_drug_pool.py first")
+    evidence = load_evidence()
+    with open(POOL) as handle:
+        pool = {r["drug_name"]: r for r in csv.DictReader(handle, delimiter="\t")}
+    with open(INPUT) as handle:
+        rows = list(csv.DictReader(handle, delimiter="\t"))
+    with open(PRODUCTS) as handle:
+        products = {r["drug_name"]: r for r in csv.DictReader(handle, delimiter="\t")}
+    errors = []
+    for row in rows:
+        name = row["drug_name"]
+        if pool.get(name, {}).get("us_status") != "us_approved":
+            errors.append(f"{name}: no us_approved pool record")
+        if name not in products:
+            errors.append(f"{name}: no product-level status record")
+        else:
+            age = (date.today() - date.fromisoformat(products[name]["retrieved_at"])).days
+            if age > 30: errors.append(f"{name}: product evidence is stale ({age} days)")
+        if row.get("finalist_axis") not in {"yes", "no"} or row.get("safety_direction_veto") not in {"yes", "no"}:
+            errors.append(f"{name}: invalid finalist_axis or safety_direction_veto")
+        for field in SCORE_FIELDS:
+            try: value = int(row[field])
+            except ValueError:
+                errors.append(f"{name}: {field} is not an integer"); continue
+            if not 0 <= value <= 3: errors.append(f"{name}: {field}={value} outside 0..3")
+        refs = [x for x in row["ev_refs"].split(";") if x]
+        if not refs: errors.append(f"{name}: no EV references")
+        for ref in refs:
+            entry = evidence.get(ref)
+            if entry is None: errors.append(f"{name}: missing {ref}")
+            elif entry.get("verification_status") != "verified":
+                errors.append(f"{name}: {ref} is not verified")
+    if errors:
+        print("research-priority validation failed:", file=sys.stderr)
+        for error in errors: print(f"  - {error}", file=sys.stderr)
+        return 1
+    ranks, scores = {}, {}
+    for scenario, weights in SCENARIOS.items():
+        ordered = sorted(rows, key=lambda r: (-score(r, weights), r["drug_name"]))
+        ranks[scenario] = {r["drug_name"]: i for i, r in enumerate(ordered, 1)}
+        scores[scenario] = {r["drug_name"]: score(r, weights) for r in rows}
+    rows.sort(key=lambda r: (ranks["base"][r["drug_name"]], r["drug_name"]))
+    selected_axes = set()
+    selection = {}
+    for row in rows:
+        name, axis = row["drug_name"], row["axis"]
+        direct = products[name]["product_class"] == "approved_direct_product"
+        if row["safety_direction_veto"] == "yes": status, reason = "excluded_high_risk", "safety/direction hard veto"
+        elif not direct: status, reason = "conditional", "no matching direct marketed product verified"
+        elif row["finalist_axis"] != "yes": status, reason = "alternate", "predeclared same-axis alternate"
+        elif axis in selected_axes: status, reason = "alternate", "higher-ranked eligible candidate already represents axis"
+        else:
+            status, reason = "finalist", "highest-ranked eligible predeclared independent axis"
+            selected_axes.add(axis)
+        selection[name] = (status, reason)
+    fields = ["drug", "axis", "research_priority_score", "rank_min", "rank_max",
+              *SCORE_FIELDS, "us_status", "product_class", "product_eligible",
+              "selection_status", "selection_reason", "ev_refs", "rationale"]
+    with io.StringIO(newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields, delimiter="\t"); writer.writeheader()
+        for row in rows:
+            name = row["drug_name"]; rr = [value[name] for value in ranks.values()]
+            writer.writerow({"drug": name, "axis": row["axis"],
+                "research_priority_score": scores["base"][name], "rank_min": min(rr),
+                "rank_max": max(rr), **{f: row[f] for f in SCORE_FIELDS},
+                "us_status": pool[name]["us_status"],
+                "product_class": products[name]["product_class"],
+                "product_eligible": "yes" if products[name]["product_class"] == "approved_direct_product" else "no",
+                "selection_status": selection[name][0], "selection_reason": selection[name][1],
+                "ev_refs": row["ev_refs"],
+                "rationale": row["rationale"]})
+        rendered = handle.getvalue()
+    if args.check_only:
+        if not OUT.is_file():
+            print(f"FAIL saved ranking missing: {OUT}", file=sys.stderr)
+            return 1
+        with OUT.open(newline="") as handle:
+            saved = csv.DictReader(handle, delimiter="\t")
+            saved_rows = list(saved)
+            saved_fields = saved.fieldnames
+        expected_rows = list(csv.DictReader(io.StringIO(rendered), delimiter="\t"))
+        if saved_fields != fields or saved_rows != expected_rows:
+            print("FAIL saved ranking differs from current inputs; no files changed", file=sys.stderr)
+            return 1
+    else:
+        OUT.parent.mkdir(parents=True, exist_ok=True)
+        OUT.write_text(rendered)
+    for row in rows:
+        name = row["drug_name"]; rr = [value[name] for value in ranks.values()]
+        print(f"{name:32} priority={scores['base'][name]:>3} rank={ranks['base'][name]} sensitivity={min(rr)}-{max(rr)} {selection[name][0]}")
+    print(f"{'verified existing output (read-only)' if args.check_only else 'output'}: {OUT}\n"
+          "Research-priority ranking only; not efficacy or treatment advice.")
+    return 0
 
-    scored = []
-    for name, c in CANDIDATES.items():
-        approved = pool.get(name, {}).get("us_status", "missing")
-        if approved != "us_approved":
-            print(f"!! {name}: 上市核验状态 {approved} —— 红线候选不应出现于此", file=__import__("sys").stderr)
-        total = sum(c[k] * WEIGHTS[k] for k in WEIGHTS)
-        scored.append((total, name, approved, c))
-
-    scored.sort(key=lambda t: (-t[0], t[1]))
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUT, "w") as f:
-        f.write("drug\taxis\ttotal\tmechanism_match(x2)\ttestable_pred\tevidence_human\t"
-                "safety_margin\tcounter_weight\tus_status\trationale\n")
-        for total, name, approved, c in scored:
-            f.write("\t".join(map(str, [name, c["axis"], total, c["mechanism_match"] * 2,
-                                        c["testable_pred"], c["evidence_human"],
-                                        c["safety_margin"], c["counter_weight"],
-                                        approved, c["rationale"]])) + "\n")
-
-    print(f"{'drug':32s} {'axis':28s} {'score':>5s}  status")
-    for total, name, approved, c in scored:
-        print(f"{name:32s} {c['axis']:28s} {total:5d}  {approved}")
-    print(f"\n→ {OUT}")
-    print("精选 = 前 4（独立轴）；sirolimus/HCQ 为同轴 alternate（见 docs/09 §4）")
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": raise SystemExit(main())

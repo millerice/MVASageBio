@@ -247,6 +247,20 @@ class TestPreflight(HarnessTestCase):
             header=HEADER[:10]))
         self.assertTrue(any("表头" in e for e in errs))
 
+    def test_reject_missing_chr_prefix(self):
+        errs = scorer.preflight(write_csv(
+            [["PROBAND01", "7", V1[1], V1[2], V1[3],
+              V2[0], V2[1], V2[2], V2[3], 0.9, "primary", ""]],
+            Path(self.tmp) / "noprefix.csv"))
+        self.assertTrue(any("chr" in e for e in errs))
+
+    def test_reject_incomplete_second_allele(self):
+        errs = scorer.preflight(write_csv(
+            [["PROBAND01", V1[0], V1[1], V1[2], V1[3],
+              V2[0], "", "", "", 0.9, "primary", ""]],
+            Path(self.tmp) / "half.csv"))
+        self.assertTrue(any("第二等位" in e for e in errs))
+
     def test_unsorted_epcr_warns_but_passes(self):
         err_buf = io.StringIO()
         with contextlib.redirect_stderr(err_buf):
@@ -255,6 +269,31 @@ class TestPreflight(HarnessTestCase):
                 Path(self.tmp) / "unsorted.csv"))
         self.assertEqual(errs, [])
         self.assertIn("警告", err_buf.getvalue())
+
+    def test_reject_invalid_positions_before_official_loader(self):
+        for column in (2, 6):
+            for value in ("abc", "1.5", "0", "-5"):
+                with self.subTest(column=column, value=value):
+                    row = comp_het_row(V1, V2, 0.9)
+                    row[column] = value
+                    result, code, output = self.run_harness([row])
+                    self.assertIsNone(result)
+                    self.assertEqual(code, 1)
+                    self.assertIn("正整数", output)
+
+    def test_reject_missing_primary_alleles(self):
+        for column in (3, 4):
+            row = comp_het_row(V1, V2, 0.9)
+            row[column] = " "
+            self.assertEqual(self.run_harness([row])[1], 1)
+
+    def test_reject_padded_header_that_dictreader_would_not_recognize(self):
+        header = list(HEADER)
+        header[0] = " proband_id "
+        self.assertEqual(self.run_harness([comp_het_row(V1, V2, 0.9)], header)[1], 1)
+
+    def test_reject_empty_fields_row_that_official_loader_would_read(self):
+        self.assertEqual(self.run_harness([comp_het_row(V1, V2, 0.9), [""] * 12])[1], 1)
 
 
 if __name__ == "__main__":

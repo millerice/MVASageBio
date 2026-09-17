@@ -44,3 +44,7 @@ tmp/
 
 # 本地工具链（SnpEff 等，体积大且可重装）
 tools/
+
+# 含私人服务器地址的本地取回脚本（docs/14 公开红线：地址不入公开仓库）；
+# 内容受 docs/16 保护对象哈希锚定，只排除跟踪、不修改文件本身
+server_tasks/sync_q2_markdup_stats.sh

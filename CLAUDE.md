@@ -1,5 +1,9 @@
 # CLAUDE.md — MVASageBio 项目指令
 
+普通恢复任务先读 `docs/13-项目状态-2026-09-17.md`。
+用户要求独立/再次诊断并减少历史干扰时，先读 `docs/14-独立诊断入口.md`，按其顺序最后再对照历史检查点。
+下文资源可用性等历史事实需实测，不能替代当前检查；本段不改变合规约束。
+
 MVA 黑客松 2026 参赛项目（Sage Bionetworks × MVA Society × Hugging Face × BEACON）。
 截止 **2026-10-24 23:59 UTC**。调研报告与架构见 `docs/00–04`，里程碑验收见 `docs/05`，证据台账在 `research/evidence.jsonl`。
 
@@ -29,7 +33,9 @@ MVA 黑客松 2026 参赛项目（Sage Bionetworks × MVA Society × Hugging Fac
 
 **冲突检测**：用户前提、网页、数据库之间有矛盾必须主动指出，不得迎合。范例：用户提示「BUB1B 与 MVA 2 型」——实际 BUB1B = MVA1、CEP57 = MVA2（EV-0017）。
 
-**Reporter 隔离**：终版报告（T1 methods / T2 报告）只能引用证据台账中的 EV 编号生成，禁止写作时临场补充未入账事实。
+**Reporter 隔离**：终版报告（T1 methods / T2 报告）只能引用已入账的 EV 编号，禁止写作时临场补充未入账事实。
+
+**公开台账 vs 私有附录**：`research/evidence.jsonl` 是公开台账（结论级，git 跟踪）。位点/核型级细节（当前白名单：EV-0077、EV-0086；以及 EV-0039/0040 的坐标级全文）只存在于 gitignored 的 `data/processed/evidence_private.jsonl`。公开报告可以引用这些 ID，但不得写入坐标/碱基/AD 数值；`validate_chain.py` R8 把该白名单视为合法引用。私有附录**算台账**（须先入账再引用），只是不进公开仓库。
 
 ## 医学安全
 
