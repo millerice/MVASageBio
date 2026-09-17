@@ -1,8 +1,8 @@
 # Track 2 — Drug Repurposing (MVA1 / BUB1B)
 
-T2 主战场模块。核心资产是**机器可读机制链 + 证据台账**：报告的每一条 claim 都能被
-自动化校验溯源到 `research/evidence.jsonl` 的 EV 编号（Scientific Rigor 35% 的直接抓手，
-也是 M5 对抗审查门的自动化部分）。
+T2 主战场模块。核心资产是**机器可读机制链 + 证据台账**。自动校验检查报告中的 EV 引用、
+机制链和已登记 claim 的结构；不能证明清单覆盖每条断言，也不能证明文献支持其句意。
+这只是 M5 对抗审查门的自动化部分。
 
 ## 文件
 
@@ -10,8 +10,9 @@ T2 主战场模块。核心资产是**机器可读机制链 + 证据台账**：�
 |---|---|---|
 | `ledger.py` | M1–M3 | 台账 CLI：`lint`（schema 关卡）/ `stats` / `show` / `grep` |
 | `validate_chain.py` | M1 | 机制链 × 台账交叉审计（R1–R6 规则，详见文件头）；`--dot` 可出机制图 |
-| `build_drug_pool.py` | M2 | 已上市药物池构建（骨架；`--dry-run` 看计划数据源） |
-| `score_candidates.py` | M2 | 药池 × 机制链 → 排序候选表（骨架） |
+| `build_drug_pool.py` | M2 | openFDA 成分级初筛；`api_error` 整跑失败，不能替代产品级标签复核 |
+| `score_candidates.py` | M2 | 跟踪 TSV × 产品表 → 研究优先级与五场景敏感性；不是疗效分数 |
+| `depth_power.py` | M2 | 相对观测样本的追加乘性信号恢复与 block-bootstrap 分离；不提供生物学排除界限 |
 | `research/mechanism_chain.json` | M1 | 机制链本体（nodes 带 ev_refs / granularity / conflict_note） |
 
 ## 运行
@@ -20,9 +21,14 @@ T2 主战场模块。核心资产是**机器可读机制链 + 证据台账**：�
 .venv/bin/python src/track2_repurposing/ledger.py lint
 .venv/bin/python src/track2_repurposing/validate_chain.py
 .venv/bin/python src/track2_repurposing/validate_chain.py --dot   # 机制图 DOT
+.venv/bin/python src/track2_repurposing/score_candidates.py --check-only # 只读比对既有排名
 ```
 
 两道关卡全绿是 M5 放行的前置条件。
+
+`score_candidates.py` 不带 `--check-only` 时会生成排名文件；综合 preflight 只用只读模式。
+公开代码尚未覆盖完整 Q2 历史执行链；比对、GC 分箱、原裁决脚本目前仍在私有区。
+冻结 Q1 validator 的已知限制和历史注释更正见 `server_tasks/q1_full_reference_recheck/README.md`。
 
 ## 数据与存储约定（2026-09-08 定）
 

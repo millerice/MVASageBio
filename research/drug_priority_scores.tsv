@@ -1,0 +1,7 @@
+drug_name	axis	finalist_axis	safety_direction_veto	disease_model_evidence	mechanism_target_engagement	testability	human_exposure_precedent	pediatric_chronic_feasibility	translation_distance	counter_evidence_severity	ev_refs	rationale
+niacinamide (nicotinamide)	L1_protein_stability	yes	no	1	2	3	3	2	3	2	EV-0023;EV-0044;EV-0045;EV-0066;EV-0067;EV-0069;EV-0070;EV-0080	NMN raises BubR1 in an aging-mouse model, but NMN-to-niacinamide and model-to-patient-mutant transfers remain untested
+everolimus	L2_mtorc1_sarcopenia	yes	no	2	3	2	3	2	2	3	EV-0057;EV-0059;EV-0069;EV-0071;EV-0074;EV-0078;EV-0079;EV-0081	Directly engages mTORC1 with a BubR1-insufficiency mouse link; chronic pediatric toxicity and growth uncertainty are substantial
+metformin	L4_metabolic_systemic_stress	yes	no	1	1	3	2	3	3	2	EV-0059;EV-0061;EV-0063;EV-0069;EV-0072;EV-0073;EV-0080	Human exposure is established, but mechanism support comes from Down-syndrome models and has direction-of-effect tension
+chloroquine	L3_aneuploidy_clearance	yes	yes	1	2	2	1	1	3	3	EV-0059;EV-0063;EV-0065;EV-0069	VETO: reducing fitness of non-transformed aneuploid cells may worsen tissue loss; no tumor-versus-MVA-tissue therapeutic window is established
+sirolimus	L2_mtorc1_sarcopenia	no	no	2	3	2	2	1	2	3	EV-0057;EV-0069;EV-0074;EV-0079	Same mechanism axis as everolimus with a shallower pediatric evidence base
+hydroxychloroquine	L3_aneuploidy_clearance	no	yes	0	1	2	1	2	3	3	EV-0063;EV-0065;EV-0069	VETO: same direction concern as chloroquine plus no cited trisomic-MEF experiment

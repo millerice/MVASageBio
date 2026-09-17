@@ -93,14 +93,23 @@ def main() -> None:
                                "needs_manual_check", "retrieved_at"])]
     from datetime import date
     today = date.today().isoformat()
+    api_errors = []
     for r in data:
         name = r[0]
         res = verify(name)
         print(f"  {name:42s} → {res['status']:18s} (apps={res['apps']}, "
               f"marketed={res['marketed_products']})")
+        if res["status"] == "api_error":
+            api_errors.append(f"{name}: {res['needs_manual_check']}")
         out.append("\t".join(r + [res["status"], str(res["apps"]),
                                   str(res["marketed_products"]),
                                   res["needs_manual_check"], today]))
+    if api_errors:
+        print("✗ openFDA 查询失败，拒绝写出药池（避免把未核验药当已排序候选）:",
+              file=sys.stderr)
+        for line in api_errors:
+            print(f"  - {line}", file=sys.stderr)
+        sys.exit(1)
     OUT.write_text("\n".join(out) + "\n")
     print(f"\n→ {OUT}（{len(data)} 行核验完成）")
 

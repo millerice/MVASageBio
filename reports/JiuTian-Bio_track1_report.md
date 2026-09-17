@@ -13,7 +13,7 @@ A phenotype-driven, evidence-tiered pipeline for compound-heterozygous (comp-het
 3. **Per-gene region annotation** — for each gene region (±5 kb), all proband PASS variants were annotated against region-sliced **gnomAD v4.1** sites data (AF, AC/AN, nhomalt, faf95, CADD PHRED, REVEL, SpliceAI, VEP consequences) and **ClinVar** (significance, review status). Private alleles absent from gnomAD were annotated via **Ensembl VEP REST** against the MANE transcript (SIFT/PolyPhen, HGVS).
 4. **Comp-het calling** — within a candidate gene, require two heterozygous variants that are individually rare (AF < 0.01; loss-of-function candidates held to stricter population evidence including zero observed homozygotes), functionally consequential (VEP HIGH/MODERATE, with NMD-sensitivity for truncating variants), and phenotype-consistent. One stop-gain plus one private, dual-algorithm-deleterious missense in **BUB1B** satisfy all criteria; both map to the kinase domain.
 5. **Differential exclusion** — CEP57 and TRIP13 regions were processed through the identical pipeline and contained no coding-variant hits; both were excluded.
-6. **Packaging preflight** — a local scoring harness importing the official `evaluation.py` kernel verified CSV format, chromosome style, row pairing, and a full-match scoring path (mock-truth simulation) before submission.
+6. **Packaging preflight** — a local scoring harness importing the official `evaluation.py` kernel verified the 12-column template, `PROBAND01`, epcr range, finding_type, `chr` prefix on every filled chromosome field, and complete `chrom_2/pos_2/ref_2/alt_2` whenever a second allele is started. Rank points were checked only against a mock-truth simulation (format path), not against a hidden official key.
 
 ## 2. Automation level (form Q11–Q12)
 
@@ -54,9 +54,18 @@ v0 contains a single `primary` row; no secondary or incidental findings met incl
 
 ## 8. Generative-AI disclosure (form Q10, required)
 
-> **Anthropic API, Claude (Claude Code), commercial terms, no training on customer content.**
+> **Initial workflow: Anthropic Claude via Claude Code. Subsequent review and revisions: OpenAI Codex desktop.**
 
-Commercially available generative AI (Anthropic Claude Code, Processor-type commercial API, not used for model training) was used for pipeline design, code implementation, analysis orchestration, and documentation. All biological claims were human-reviewed and traced to the tiered evidence ledger backed by public databases (ClinVar / gnomAD / OMIM / Ensembl); the model produced no biological assertion without database support. Variant-level candidate data (coordinates, genotypes, annotations) were processed by the tool; no raw VCF/FASTQ was transmitted, and no scoring feedback was given to the model.
+The initial September 8 workflow used Claude Code for pipeline design, coding, analysis assistance,
+and documentation. The usage log records a commercial Anthropic API plan and processing of
+variant-level candidate coordinates, genotypes, and annotations, without raw VCF/FASTQ transfer
+or model-output scoring feedback in that workflow. Subsequent September 15–17 Codex desktop
+sessions reviewed code and private historical materials, interpreted returned diagnostic summaries,
+and assisted with revisions. These later sessions must not be described as using public material only.
+Scientific claims must trace to the evidence ledger; automated checks do not establish completed
+human verification of every claim. The full interaction inventory, account-specific service terms,
+and final independent review remain pending, as recorded in `docs/llm-usage.log`.
+This disclosure addendum does not imply that the later diagnostics formed part of the September 8 submission.
 
 ## 9. License
 

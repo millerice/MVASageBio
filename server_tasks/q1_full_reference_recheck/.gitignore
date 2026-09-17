@@ -1,0 +1,12 @@
+# Controlled-data runtime outputs: never commit or copy these back into the public repository.
+work/
+private/
+export/
+logs/
+*.bam
+*.bai
+*.cram
+*.crai
+*.vcf
+*.vcf.gz
+*.mpileup

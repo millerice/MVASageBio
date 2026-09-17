@@ -1,23 +1,25 @@
 {
   "version": "0.1",
-  "updated": "2026-09-08",
-  "note": "T2 机制链（M1 产出，机器可读）。granularity=public 的 claim 可直接进公开 repo/报告；granularity=report 的 claim 在提交报告（官方私密渠道）中展开为 HGVS+残基级，公开仓库保持基因/结构域级。validate_chain.py 强制：每条 ev_refs 必须存在于 research/evidence.jsonl；引用 conflict 状态条目必须带 conflict_note。",
+  "updated": "2026-09-17",
+  "note": "T2 机制链（机器可读）。public/report 是呈现范围标记，不授权公开位点级内容；当前报告与公开仓库均保持基因/结构域级，敏感细节只存私有附录。validate_chain.py 检查引用和结构，不替代语义审计或完整 claim 覆盖检查。",
   "nodes": [
     {
       "id": "N1",
       "stage": "genotype",
-      "claim": "Proband carries a biallelic BUB1B genotype: one truncating (nonsense) allele and one missense allele in the kinase domain (compound heterozygous) — confirmed as the official Track 1 answer (full match).",
-      "claim_type": "fact",
+      "claim": "Proband carries two BUB1B variants (a truncating nonsense allele and a kinase-domain missense allele) that constitute the official Track 1 answer pair (full match). The trans/biallelic configuration is inferred, not directly phased.",
+      "claim_type": "inference",
       "granularity": "report",
-      "ev_refs": ["EV-0039", "EV-0040", "EV-0042"]
+      "ev_refs": ["EV-0039", "EV-0040", "EV-0042"],
+      "counter_note": "Official T1 confirmation establishes agreement with the answer pair, not cis/trans. Direct qualified query-name overlap did not establish phase; chained phasing was not assessed. No parental component is available [EV-0076, EV-0089]."
     },
     {
       "id": "N2",
       "stage": "allele1_null",
-      "claim": "The nonsense allele is a functional null: it lies in an NMD-sensitive exon, and truncating BUB1B transcripts are degraded by nonsense-mediated decay in MVA patients (patient-derived evidence).",
-      "claim_type": "fact",
+      "claim": "The nonsense allele has a functional-null hypothesis based on its annotated NMD-sensitive position and transcript findings for other BUB1B alleles in published MVA patients.",
+      "claim_type": "inference",
       "granularity": "public",
-      "ev_refs": ["EV-0039", "EV-0048"]
+      "ev_refs": ["EV-0039", "EV-0048"],
+      "counter_note": "Neither transcript depletion nor protein loss has been measured in this proband; annotation and findings from other alleles do not establish a patient-specific functional null."
     },
     {
       "id": "N3",
@@ -39,10 +41,11 @@
     {
       "id": "N5",
       "stage": "bubr1_insufficiency",
-      "claim": "Net consequence is BUBR1 protein insufficiency in a dose-dependent regime: ~13% expression preserves segregation fidelity whereas ~6% causes mis-segregation in most cells (cell-level thresholds); mouse dose-response gives small stature, cancer predisposition, progeroid features.",
-      "claim_type": "fact",
+      "claim": "The proposed consequence in this proband is BUBR1 protein insufficiency. Experimental models support dose dependence: ~13% expression preserves segregation fidelity whereas ~6% causes mis-segregation in most cells; mouse dose series show growth, cancer and progeroid phenotypes.",
+      "claim_type": "inference",
       "granularity": "public",
-      "ev_refs": ["EV-0045", "EV-0046", "EV-0050"]
+      "ev_refs": ["EV-0045", "EV-0046", "EV-0050"],
+      "counter_note": "The proband's BUBR1 abundance is unmeasured; model-specific dose thresholds are not patient thresholds."
     },
     {
       "id": "N6",
