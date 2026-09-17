@@ -242,5 +242,11 @@ attestation + 服务条款核验。
 - 2026-09-17 R1 收官：用户执行 ChatGPT Deep Research 引文核验（输出已归档）；本方完成四项
   独立复核（PMID 26681807 / Becker 引语 / poloxin+simvastatin 题录 / ClinicalTrials.gov API 亲查）
   后执行 G1–G7：台账 5 条修正 + 新增 EV-0093/0094（92 条）+ 报告 12 处 + tsv 1 处；
-  校验全绿，摘要 497/500。**R1–R5 五轮交叉审核全部闭环。** 下一步：claims 升格
-  independent_reviewed + review_attestations.jsonl → --final 门 + checkpoint commit。
+  校验全绿，摘要 497/500。**R1–R5 五轮交叉审核全部闭环。**
+- 2026-09-17 终收（claims 升格 + attestation）：report_claims.tsv 全部 10 条
+  `machine_checked` → `independent_reviewed`；`research/review_attestations.jsonl` 建档
+  （绑报告 sha256 `9f9de7c9…74e5a`，记录 R1–R5 全部审者/日期/覆盖 + 人工裁决 +
+  per-claim 覆盖说明 + 局限声明：独立审者为异提供商 LLM + 人工裁决、非同行评审；
+  R1 会话账号侧条款核验仍开（B4）；attestation 严格绑定当前报告字节——
+  **B1–B4 任何报告改动后须对新版本重新审签**）。`validate_all.py --final` **首次全绿**
+  （0 failing gates）。
