@@ -34,7 +34,7 @@
       "id": "N4",
       "stage": "genotype_architecture",
       "claim": "This genotype matches the literature rule for surviving MVA1: a truncating/null allele paired with a missense allele in or near the kinase domain; two complete nulls have never been reported.",
-      "claim_type": "fact",
+      "claim_type": "inference",
       "granularity": "public",
       "ev_refs": ["EV-0047"]
     },
@@ -59,7 +59,7 @@
       "id": "N7",
       "stage": "aneuploidy",
       "claim": "Checkpoint leakage produces mosaic variegated aneuploidy — random gains/losses across ~25-50% of cells; affected embryos show >50% aneuploid cells.",
-      "claim_type": "fact",
+      "claim_type": "inference",
       "granularity": "public",
       "ev_refs": ["EV-0049", "EV-0055"]
     },
@@ -76,7 +76,7 @@
       "id": "N9",
       "stage": "phenotype_rpl",
       "claim": "Parental recurrent pregnancy loss is mechanistically consistent: BubR1-null embryos die E7.5-E13.5 with MVA/PSCS; SAC insufficiency is predicted to underlie a significant fraction of human RPL; recurrence is 25% per conception (autosomal recessive carriers).",
-      "claim_type": "fact",
+      "claim_type": "inference",
       "granularity": "public",
       "ev_refs": ["EV-0049", "EV-0056"],
       "counter_note": "RPL attribution is the authors' inference, not proven [EV-0056]."
@@ -94,7 +94,7 @@
       "id": "N11",
       "stage": "phenotype_progeroid",
       "claim": "BubR1 insufficiency drives a progeroid/sarcopenia axis (muscle wasting, dwarfism, cataracts); sarcopenia correlates with mTORC1 hyperactivity and p19Arf-dependent senescence — a druggable parallel axis distinct from chromosome segregation.",
-      "claim_type": "fact",
+      "claim_type": "inference",
       "granularity": "public",
       "ev_refs": ["EV-0057"],
       "counter_note": "mTORC1 link established in mice only; no pediatric MVA1 muscle data [EV-0057]."
@@ -112,7 +112,7 @@
       "id": "N13",
       "stage": "systemic_stress",
       "claim": "Beyond tumor susceptibility, MVA entails cellular and systemic stress including a chronic immune response (2024 authoritative review) — a potentially modifiable disease component distinct from chromosome segregation.",
-      "claim_type": "fact",
+      "claim_type": "inference",
       "granularity": "public",
       "ev_refs": ["EV-0061"],
       "counter_note": "Which clinical manifestations (growth failure severity, symptom burden) are attributable to systemic immune activation in MVA1 patients is not established."
@@ -121,7 +121,7 @@
       "id": "N14",
       "stage": "druggable_axis_stability",
       "claim": "BubR1 protein abundance is controlled by the SIRT2–NAD+ deacetylase axis: SIRT2 overexpression or NAD+ precursor (NMN) treatment raises BubR1 abundance in vivo — a pharmacological route to the protein-insufficiency node (N5), complementing the genetic proof that raising BubR1 is protective.",
-      "claim_type": "fact",
+      "claim_type": "inference",
       "granularity": "public",
       "ev_refs": ["EV-0066", "EV-0067"],
       "counter_note": "NMN evidence is from BubR1-insufficient aging mice, not MVA missense mutants; NMN is not an approved drug — approved NAD+ precursors would carry an evidence-transfer gap."
