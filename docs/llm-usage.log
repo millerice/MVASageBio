@@ -52,3 +52,16 @@ diff、摘要词数、基线失配），复现全部一致；经用户授权后�
 | 2026-09-02 ~ 09-03 | Anthropic Claude（Claude Code，商业 API） | Processor 型（商业 API，默认不用于训练） | 无基因组数据——仅官方公开页面（Space 源码 / 规则 / 公告 / 讨论区）与公开文献摘要 | 赛前摸底、证据台账建账、docs/00–06 与 CLAUDE.md 撰写 |
 | 2026-09-07 ~ 09-08 | Anthropic Claude（Claude Code，商业 API） | Processor 型（同上） | 无基因组数据——仓库文档 + 官方 Space 公开源码 | 项目状态盘点；G3 门槛补充；本地评分 harness 开发 |
 2026-09-08 | Anthropic Claude（Claude Code，商业 API） | Processor 型（同上） | 变异级候选数据（坐标/基因型/注释结果）；不含原始 VCF/FASTQ；无评分反馈给予模型输出 | T1 v0：候选基因区域注释、comp-het 判定、证据台账与方法报告撰写
+2026-09-17 | deepseek-chat via api.deepseek.com（交叉审核 runner） | Processor 型（CROSS_REVIEW_TERMS_ACK 已确认核对） | 公开级材料（report.md；无受控数据） | 交叉审核 R4，输出 data/processed/cross_review/R4_deepseek-chat_20260917-1742.md |
+2026-09-17 | deepseek-chat via api.deepseek.com（交叉审核 runner） | Processor 型（CROSS_REVIEW_TERMS_ACK 已确认核对） | 公开级材料（report.md, mechanism_chain.json；无受控数据） | 交叉审核 R2，输出 data/processed/cross_review/R2_deepseek-chat_20260917-1742.md |
+2026-09-17 | deepseek-chat via api.deepseek.com（交叉审核 runner） | Processor 型（CROSS_REVIEW_TERMS_ACK 已确认核对） | 公开级材料（report.md, rules.py, evaluation.py；无受控数据） | 交叉审核 R3，输出 data/processed/cross_review/R3_deepseek-chat_20260917-1742.md |
+2026-09-17 | deepseek-chat via api.deepseek.com（交叉审核 runner） | Processor 型（CROSS_REVIEW_TERMS_ACK 已确认核对） | 公开级材料（report.md；无受控数据） | 交叉审核 R5，输出 data/processed/cross_review/R5_deepseek-chat_20260917-1743.md |
+2026-09-17 | qwen-max via dashscope.aliyuncs.com（交叉审核 runner） | Processor 型（CROSS_QWEN_TERMS_ACK 已确认核对） | 公开级材料（report.md；无受控数据） | 交叉审核 R4，输出 data/processed/cross_review/R4_qwen-max_20260917-1755.md |
+2026-09-17 | qwen-max via dashscope.aliyuncs.com（交叉审核 runner） | Processor 型（CROSS_QWEN_TERMS_ACK 已确认核对） | 公开级材料（report.md, mechanism_chain.json；无受控数据） | 交叉审核 R2，输出 data/processed/cross_review/R2_qwen-max_20260917-1755.md |
+2026-09-17 | qwen-max via dashscope.aliyuncs.com（交叉审核 runner） | Processor 型（CROSS_QWEN_TERMS_ACK 已确认核对） | 公开级材料（report.md, rules.py, evaluation.py；无受控数据） | 交叉审核 R3，输出 data/processed/cross_review/R3_qwen-max_20260917-1755.md |
+2026-09-17 | qwen-max via dashscope.aliyuncs.com（交叉审核 runner） | Processor 型（CROSS_QWEN_TERMS_ACK 已确认核对） | 公开级材料（report.md；无受控数据） | 交叉审核 R5，输出 data/processed/cross_review/R5_qwen-max_20260917-1756.md |
+2026-09-17 | deepseek-chat via api.deepseek.com（交叉审核 runner） | Processor 型（CROSS_DEEPSEEK_TERMS_ACK 已确认核对） | 公开级材料（report.md；无受控数据） | 交叉审核 R4，输出 data/processed/cross_review/R4_deepseek-chat_20260917-1830.md |
+2026-09-17 | deepseek-chat via api.deepseek.com（交叉审核 runner） | Processor 型（CROSS_DEEPSEEK_TERMS_ACK 已确认核对） | 公开级材料（report.md；无受控数据） | 交叉审核 R4，输出 data/processed/cross_review/R4_deepseek-chat_20260917-1833.md |
+2026-09-17 | deepseek-chat via api.deepseek.com（交叉审核 runner） | Processor 型（CROSS_DEEPSEEK_TERMS_ACK 已确认核对） | 公开级材料（report.md；无受控数据） | 交叉审核 R4，输出 data/processed/cross_review/R4_deepseek-chat_20260917-1836.md |
+2026-09-17 | deepseek-chat via api.deepseek.com（交叉审核 runner） | Processor 型（CROSS_DEEPSEEK_TERMS_ACK 已确认核对） | 公开级材料（report.md；无受控数据） | 交叉审核 R4，输出 data/processed/cross_review/R4_deepseek-chat_20260917-1842.md |
+2026-09-17 | ChatGPT Deep Research（用户手动网页会话） | Processor 型前提：R1 操作卡第 1 步要求用户确认 Data controls 关闭训练后执行；账号侧配置未独立核验 | 公开级白名单四文件（r1_upload/: 终版 report.md、公开台账 evidence.jsonl、plan.md、R1_prompt_only.txt；无受控数据、无私有附录） | 交叉审核 R1 引文核验，输出 R1_output_chatgpt_2026-09-17.md；未对模型输出打分/反馈

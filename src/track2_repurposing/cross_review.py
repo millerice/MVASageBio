@@ -17,6 +17,9 @@
                              （表示你已核对该服务为 Processor 型：不训练/不取得数据权利/限时留存）
     CROSS_REVIEW_MAX_TOKENS  可选，默认 16384
 
+    多服务商写法：CROSS_REVIEW_PROVIDER=deepseek|qwen|glm 时改读对应 CROSS_<NAME>_* 块
+    （含 TERMS_ACK——各家条款分开核对、独立放行）；不设 provider 用上面单块旧写法
+
 设计约束:
     - prompt 单一来源 = docs/11 的 ```text 代码块；手改文档即生效，runner 不存副本
     - 材料白名单硬编码于 ROUNDS；data/ 下路径一律拒绝（基因组红线双保险）
@@ -71,6 +74,26 @@ def load_env():
         k, v = line.split('=', 1)
         cfg[k.strip()] = v.strip().strip('"').strip("'")
     return cfg
+
+
+# .env 多服务商块前缀（CROSS_REVIEW_PROVIDER 选择其一；条款确认门随块独立）
+PROVIDERS = {'deepseek': 'CROSS_DEEPSEEK_', 'qwen': 'CROSS_QWEN_', 'glm': 'CROSS_GLM_'}
+
+
+def resolve_cfg(cfg):
+    """CROSS_REVIEW_PROVIDER=deepseek|qwen 时，把对应 CROSS_<NAME>_* 块映射为旧版
+    CROSS_REVIEW_* 键（含 TERMS_ACK——各家条款需分别核对）；未设 provider 时按
+    旧版单块写法原样返回，向后兼容。"""
+    provider = cfg.get('CROSS_REVIEW_PROVIDER', '').strip().lower()
+    if not provider:
+        return cfg
+    if provider not in PROVIDERS:
+        sys.exit(f"✗ 未知 CROSS_REVIEW_PROVIDER: {provider}（可选: {', '.join(PROVIDERS)}）")
+    resolved = {'CROSS_REVIEW_PROVIDER': provider}
+    for suffix in ('BASE_URL', 'API_KEY', 'MODEL', 'TERMS_ACK', 'MAX_TOKENS'):
+        if cfg.get(PROVIDERS[provider] + suffix):
+            resolved['CROSS_REVIEW_' + suffix] = cfg[PROVIDERS[provider] + suffix]
+    return resolved
 
 
 def parse_prompts():
@@ -175,9 +198,11 @@ def run_round(rnd, prompts, cfg, dry=False):
     out.write_text(header + content, encoding='utf-8')
     print(f'[{rnd}] ✓ 输出 → {out.relative_to(ROOT)}（{len(content):,} 字符）')
     host = re.sub(r'^https?://', '', cfg['CROSS_REVIEW_BASE_URL']).split('/')[0]
+    ack_name = ('CROSS_' + cfg['CROSS_REVIEW_PROVIDER'].upper() + '_TERMS_ACK'
+                if cfg.get('CROSS_REVIEW_PROVIDER') else 'CROSS_REVIEW_TERMS_ACK')
     with open(USAGE_LOG, 'a', encoding='utf-8') as f:
         f.write(f"{datetime.now().strftime('%Y-%m-%d')} | {cfg['CROSS_REVIEW_MODEL']} via {host}"
-                f"（交叉审核 runner） | Processor 型（CROSS_REVIEW_TERMS_ACK 已确认核对） | "
+                f"（交叉审核 runner） | Processor 型（{ack_name} 已确认核对） | "
                 f"公开级材料（{', '.join(files)}；无受控数据） | "
                 f"交叉审核 {rnd}，输出 {out.relative_to(ROOT)} |\n")
     print(f'[{rnd}] ✓ llm-usage.log 已登记')
@@ -200,14 +225,17 @@ def main():
     for rnd in rounds:
         if rnd not in ROUNDS:
             sys.exit(f'✗ 未知轮次 {rnd}（可选: R1-R5 / all / check）')
-    cfg = load_env()
+    cfg = resolve_cfg(load_env())
     if not dry:
-        missing = [k for k in ('CROSS_REVIEW_BASE_URL', 'CROSS_REVIEW_API_KEY',
-                               'CROSS_REVIEW_MODEL') if not cfg.get(k)]
+        p = (cfg.get('CROSS_REVIEW_PROVIDER') or '').strip().upper()
+        pref = f"CROSS_{p or 'REVIEW'}_"
+        missing = [pref + k for k in ('BASE_URL', 'API_KEY', 'MODEL')
+                   if not cfg.get('CROSS_REVIEW_' + k)]
         if missing:
-            sys.exit(f'✗ .env 缺 {missing}（模板见 .env.example；--dry-run 不需要配置）')
+            sys.exit(f'✗ .env 缺 {missing}（当前 provider 块前缀 {pref}；模板见 .env.example；'
+                     f'--dry-run 不需要配置）')
         if cfg.get('CROSS_REVIEW_TERMS_ACK') != 'I_HAVE_VERIFIED':
-            sys.exit('✗ 红线 #3 未放行：请在 .env 设 CROSS_REVIEW_TERMS_ACK=I_HAVE_VERIFIED\n'
+            sys.exit(f'✗ 红线 #3 未放行：请在 .env 设 {pref}TERMS_ACK=I_HAVE_VERIFIED\n'
                      '  （表示你已核对该服务为 Processor 型：不训练/不取得数据权利/限时留存）')
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for rnd in rounds:
