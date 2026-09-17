@@ -257,3 +257,6 @@ attestation + 服务条款核验。
   git diff 确认改动仅限 §0（科学内容/锚点/摘要零改动）→ attestation 追加重审签行
   （sha256 2da17800…035cc，diff-scope-verified）；llm-usage.log R1 行补记 + 收尾节。
   `validate_all.py --final` 全绿。**B1–B6 中 B4 关闭；剩余 B1/B2/B3 冻结时点项 + B5 可选。**
+- 2026-09-17 GLM 三验取消：用户决定放弃（open.bigmodel.cn 充值/产品线摩擦，非科学原因）。
+  三角验证定稿为两 API 提供商（DeepSeek 主力 + qwen 独立收敛）+ 外部 ChatGPT（R1）+
+  人工裁决——attestation 所记审者即实际执行者，闭环记录无缺口；runner glm 能力保留未用。
