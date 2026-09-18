@@ -442,7 +442,25 @@ to fact); (3) identify the *druggable property* of an undruggable-looking lesion
 catalysis; downstream stress axes); (4) component screening followed by product-level label verification;
 (5) scenario-matched falsifiable predictions in an existing low-cost model platform; (6) commit to null
 results. For any rare LoF disease, steps 2–6 reuse verbatim — the ledger, validators and scoring are
-already generic code. The bottleneck that remains genuinely human is step 3's scientific judgment.
+already generic code.
+
+**Retrospective positive-control walkthrough (TSC–SEGA).** To check that the six steps run on a
+disease that is not this proband's, we walked them against a rare-disease repurposing outcome already
+represented in our ledger: everolimus for tuberous-sclerosis-complex subependymal giant cell
+astrocytoma (TSC-SEGA). (1) Controlled genotype: TSC is caused by loss-of-function mutations in TSC1
+or TSC2 [EV-0095]. (2) Mechanism chain: two nodes — loss of the TSC protein complex's inhibition of
+mTOR signalling [EV-0095]. (3) Druggable property: where MVA presents a missing protein to be
+stabilized, the TSC lesion is pathway over-activation, directly inhibitor-addressable — the framework
+surfaces this difference instead of promising equal difficulty. (4) Approved-drug screen: mTOR
+inhibitors with direct FDA products [EV-0088]. (5) Falsifiable prediction: SEGA volume response in a
+randomized trial — EXIST-1 [EV-0071]. (6) Post-approval long-term pediatric safety monitoring
+[EV-0079]. No step used MVA-specific machinery. The honest reading is not that our pipeline "would
+have discovered" everolimus — TSC had assets MVA lacks (an inhibitor-addressable lesion and a
+measurable primary endpoint) — but that the workflow runs end-to-end on an independent disease and
+correctly locates the added difficulty in step 3's scientific judgment. This is a methods-level
+scalability check, not an analysis of TSC.
+
+The bottleneck that remains genuinely human is step 3's scientific judgment.
 
 ## 8. License & acknowledgments
 
