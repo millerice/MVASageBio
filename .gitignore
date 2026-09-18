@@ -48,3 +48,7 @@ tools/
 # 含私人服务器地址的本地取回脚本（docs/14 公开红线：地址不入公开仓库）；
 # 内容受 docs/16 保护对象哈希锚定，只排除跟踪、不修改文件本身
 server_tasks/sync_q2_markdup_stats.sh
+
+# 专家评审版（用户 2026-09-18 决定不入公开仓库，仅本地分发；
+# 同日已从 git 历史彻底移除——记录见 docs/13 追记）
+docs/17-T2-Expert-Review-v0.1.md

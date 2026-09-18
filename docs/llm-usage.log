@@ -78,3 +78,12 @@ Qwen）条款已在选用与各审核批次时按发布条款核对（见上表 
 Codex 桌面会话逐轮模型版本未记录。前文各节"条款核验仍需终审/待用户核实"的待办至此关闭。
 报告 §0 相应重写（remain pending → 已完成 + 残余局限），attestation 重审签至
 sha256 2da17800…035cc，validate_all --final 全绿。
+
+## 2026-09-18 专家评审版起草（Claude Code）
+
+服务：Anthropic Claude（Claude Code，商业 API，Processor 型）。
+基于仓库内公开级材料（主报告 reports/JiuTian-Bio_track2_report.md、公开台账结论级内容、
+docs/ 历史文档）起草 docs/17-T2-Expert-Review-v0.1.md（T2 专家评审版，英文，10 节）。
+未读取受控数据（无 VCF/FASTQ/BAM 正文、无私有附录 evidence_private.jsonl、无位点级内容），
+未连接服务器，未改动候选、阈值、排名与既有科学结果。文档刻意不含工程复现要素
+（EV 编号改用 PMID 直引、无评分/权重/管线阈值/完整排名/代码）。未执行模型输出评分/反馈。
