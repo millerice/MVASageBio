@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JiuTian Bio — T2 Pitch Deck (3 min)</title>
+<style>
+  /* ============ stage: fixed 1920x1080, scaled to fit ============ */
+  html, body { margin: 0; padding: 0; height: 100%; background: #05070c; overflow: hidden; }
+  #viewport { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+  #stage {
+    width: 1920px; height: 1080px; position: relative; flex: none;
+    background: #0b0e14; color: #e8ecf1;
+    font-family: -apple-system, "SF Pro Display", "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+    transform-origin: center center;
+  }
+  .slide {
+    position: absolute; inset: 0; display: none; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    padding: 80px 140px; box-sizing: border-box;
+  }
+  .slide.active { display: flex; animation: fadein .5s ease both; }
+  @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+  .kicker {
+    font-size: 30px; letter-spacing: .28em; text-transform: uppercase;
+    color: #7d8aa0; margin-bottom: 36px; font-weight: 600;
+  }
+  .brandfoot {
+    position: absolute; bottom: 44px; left: 0; right: 0; text-align: center;
+    font-size: 24px; color: #46536b; letter-spacing: .12em;
+  }
+  h1 { font-size: 118px; line-height: 1.12; margin: 0; font-weight: 800; letter-spacing: -0.01em; }
+  h2 { font-size: 84px; line-height: 1.15; margin: 0 0 28px; font-weight: 750; }
+  .sub { font-size: 44px; color: #aab6c8; line-height: 1.5; max-width: 1450px; margin-top: 36px; }
+  .accent { color: #f5b45d; }
+  .blue { color: #6ea8fe; }
+  .dim { color: #7d8aa0; }
+
+  /* slide 1 / 11 */
+  .hero-sub { font-size: 36px; color: #7d8aa0; margin-top: 48px; letter-spacing: .06em; }
+
+  /* slide 2: chain */
+  .chain { display: flex; align-items: center; gap: 34px; margin-top: 20px; }
+  .chain .node {
+    font-size: 46px; font-weight: 700; padding: 26px 44px; border-radius: 18px;
+    border: 3px solid #2a3648; background: #101623;
+  }
+  .chain .arrow { font-size: 52px; color: #f5b45d; font-weight: 700; }
+  .mitosis { margin-top: 70px; }
+
+  /* slide 3: three tiles */
+  .tiles { display: flex; gap: 44px; margin-top: 64px; }
+  .tile {
+    width: 420px; padding: 46px 30px; border-radius: 22px; background: #101623;
+    border: 3px solid #2a3648;
+  }
+  .tile .glyph { font-size: 84px; margin-bottom: 24px; }
+  .tile .t { font-size: 42px; font-weight: 700; line-height: 1.25; }
+
+  /* slide 4: crossout */
+  .crosswrap { position: relative; display: inline-block; }
+  .cross { font-size: 96px; color: #5a6780; font-weight: 750; }
+  .crosswrap .line {
+    position: absolute; left: -4%; right: -4%; top: 52%; height: 9px;
+    background: #e05c5c; transform: rotate(-3deg); border-radius: 4px;
+  }
+  .reframe { font-size: 100px; font-weight: 800; margin-top: 60px; }
+
+  /* slide 5: graded chain */
+  .gchain { display: flex; flex-direction: column; gap: 26px; margin-top: 40px; align-items: stretch; width: 1250px; }
+  .grow { display: flex; align-items: center; gap: 26px; }
+  .gstep {
+    flex: 1; text-align: left; font-size: 38px; font-weight: 650; padding: 22px 32px;
+    background: #101623; border: 2px solid #2a3648; border-radius: 14px; line-height: 1.3;
+  }
+  .badge {
+    flex: none; width: 300px; font-size: 27px; font-weight: 800; letter-spacing: .08em;
+    text-transform: uppercase; padding: 16px 0; border-radius: 999px; text-align: center;
+  }
+  .b-ver  { background: #12351f; color: #63d68f; border: 2px solid #1f5c37; }
+  .b-inf  { background: #3a2d10; color: #f5b45d; border: 2px solid #6b5220; }
+  .b-est  { background: #10263f; color: #6ea8fe; border: 2px solid #234a77; }
+
+  /* slide 6: funnel */
+  .funnel { display: flex; flex-direction: column; align-items: center; gap: 22px; margin-top: 50px; }
+  .fbar { border-radius: 16px; text-align: center; font-weight: 700; }
+  .f1 { width: 1250px; font-size: 40px; padding: 28px 0; background: #1a2436; border: 2px solid #2f3d55; }
+  .f2 { width: 980px;  font-size: 42px; padding: 28px 0; background: #14202f; border: 2px solid #6ea8fe; color: #cfe0ff; }
+  .f3 { width: 760px;  font-size: 44px; padding: 30px 0; background: #231a10; border: 3px solid #f5b45d; color: #ffd9a0; }
+  .farrow { font-size: 46px; color: #7d8aa0; }
+
+  /* slide 7: table */
+  table.cand { border-collapse: separate; border-spacing: 0 16px; margin-top: 46px; width: 1620px; }
+  table.cand th {
+    font-size: 27px; text-transform: uppercase; letter-spacing: .1em; color: #7d8aa0;
+    text-align: left; padding: 0 28px 4px; font-weight: 700;
+  }
+  table.cand td {
+    font-size: 37px; padding: 26px 28px; background: #101623; line-height: 1.3;
+    border-top: 2px solid #2a3648; border-bottom: 2px solid #2a3648;
+  }
+  table.cand td:first-child { border-left: 2px solid #2a3648; border-radius: 14px 0 0 14px; font-weight: 800; white-space: nowrap; }
+  table.cand td:last-child  { border-right: 2px solid #2a3648; border-radius: 0 14px 14px 0; }
+  .tag { font-size: 25px; font-weight: 800; padding: 8px 20px; border-radius: 999px; vertical-align: middle; margin-left: 16px; letter-spacing: .05em; }
+  .tA { background: #12351f; color: #63d68f; border: 2px solid #1f5c37; }
+  .tB { background: #3a2d10; color: #f5b45d; border: 2px solid #6b5220; }
+  .tX { background: #3a1518; color: #e07b84; border: 2px solid #6b2a30; }
+
+  /* slide 9 */
+  .exp0 { font-size: 150px; font-weight: 850; letter-spacing: .01em; }
+
+  /* slide 10: steps */
+  .steps { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px 18px; margin-top: 56px; max-width: 1560px; }
+  .step {
+    font-size: 34px; font-weight: 700; padding: 22px 34px; border-radius: 999px;
+    background: #101623; border: 2px solid #2a3648; white-space: nowrap;
+  }
+  .step .n { color: #f5b45d; margin-right: 12px; }
+  .stamp {
+    margin-top: 66px; font-size: 40px; font-weight: 800; color: #63d68f;
+    border: 4px solid #1f5c37; border-radius: 16px; padding: 20px 46px;
+    transform: rotate(-2deg); background: #0d1a13;
+  }
+
+  /* control strip (rehearsal aid; press C) */
+  #ctrl {
+    position: absolute; top: 0; left: 0; right: 0; padding: 18px 28px; display: none;
+    background: rgba(5,7,12,.88); font-size: 24px; color: #aab6c8; z-index: 50;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace; text-align: center;
+  }
+  #ctrl.on { display: block; }
+  #bar { position: absolute; bottom: 0; left: 0; height: 10px; width: 0%; background: #f5b45d; opacity: .85; transition: width .3s linear; z-index: 40; }
+</style>
+</head>
+<body>
+<div id="viewport">
+<div id="stage">
+
+  <!-- 1 · S1 hook -->
+  <section class="slide" data-dur="14">
+    <div class="kicker">MVA Syndrome · BUB1B · Track 2</div>
+    <h1>One child.<br><span class="accent">Zero</span> trials.</h1>
+    <div class="hero-sub">— and a three-minute account of what can still be done —</div>
+    <div class="brandfoot">JiuTian Bio · MVA Hackathon 2026</div>
+  </section>
+
+  <!-- 2 · S2 lesion -->
+  <section class="slide" data-dur="12">
+    <h2>BUB1B — the checkpoint gene</h2>
+    <div class="chain">
+      <div class="node">BUB1B</div><div class="arrow">→</div>
+      <div class="node">BUBR1</div><div class="arrow">→</div>
+      <div class="node">spindle assembly<br>checkpoint</div>
+    </div>
+    <div class="sub">Biallelic loss in this child. Mitosis runs unsupervised.</div>
+    <svg class="mitosis" width="640" height="150" viewBox="0 0 640 150" fill="none">
+      <circle cx="90" cy="75" r="62" stroke="#2a3648" stroke-width="4"/>
+      <circle cx="320" cy="75" r="62" stroke="#2a3648" stroke-width="4"/>
+      <circle cx="550" cy="75" r="62" stroke="#2a3648" stroke-width="4"/>
+      <line x1="70" y1="50" x2="70" y2="100" stroke="#6ea8fe" stroke-width="8" stroke-linecap="round"/>
+      <line x1="110" y1="50" x2="110" y2="100" stroke="#6ea8fe" stroke-width="8" stroke-linecap="round"/>
+      <line x1="300" y1="55" x2="278" y2="95" stroke="#6ea8fe" stroke-width="8" stroke-linecap="round"/>
+      <line x1="340" y1="55" x2="362" y2="95" stroke="#f5b45d" stroke-width="8" stroke-linecap="round"/>
+      <line x1="530" y1="50" x2="570" y2="100" stroke="#e05c5c" stroke-width="8" stroke-linecap="round"/>
+      <path d="M152 75 H 258 M382 75 H 488" stroke="#46536b" stroke-width="4" stroke-dasharray="10 12"/>
+    </svg>
+    <div class="brandfoot">JiuTian Bio · MVA Hackathon 2026</div>
+  </section>
+
+  <!-- 3 · S2 phenotype -->
+  <section class="slide" data-dur="12">
+    <h2>What loss looks like</h2>
+    <div class="tiles">
+      <div class="tile"><div class="glyph">📉</div><div class="t">Growth<br>failure</div></div>
+      <div class="tile"><div class="glyph">🎗️</div><div class="t">Cancer<br>predisposition</div></div>
+      <div class="tile"><div class="glyph">⏳</div><div class="t">Progeroid-like<br>decline</div></div>
+    </div>
+    <div class="sub">In reported patients: <b class="accent">25–50%</b> of cells carry random gains and losses.</div>
+    <div class="brandfoot">JiuTian Bio · MVA Hackathon 2026</div>
+  </section>
+
+  <!-- 4 · S3 reframe -->
+  <section class="slide" data-dur="24">
+    <div class="crosswrap">
+      <div class="cross">Undruggable?</div>
+      <div class="line"></div>
+    </div>
+    <div class="reframe">Abundance, <span class="blue">not</span> catalysis.</div>
+    <div class="sub">Kinase-domain missense mutants still function if the protein survives.<br>
+      <span class="dim">— allele-class evidence; not measured in this child —</span></div>
+    <div class="brandfoot">JiuTian Bio · MVA Hackathon 2026</div>
+  </section>
+
+  <!-- 5 · S4 ledger -->
+  <section class="slide" data-dur="15">
+    <h2>Every claim graded. Every claim sourced.</h2>
+    <div class="gchain">
+      <div class="grow"><div class="gstep">Variant pair — comp-het BUB1B</div><div class="badge b-ver">verified</div></div>
+      <div class="grow"><div class="gstep">BUBR1 insufficiency</div><div class="badge b-inf">inferred</div></div>
+      <div class="grow"><div class="gstep">Checkpoint weakening → mosaic aneuploidy</div><div class="badge b-est">established</div></div>
+      <div class="grow"><div class="gstep">Phenotype branches — conflicts kept visible</div><div class="badge b-inf">graded</div></div>
+    </div>
+    <div class="brandfoot">JiuTian Bio · MVA Hackathon 2026</div>
+  </section>
+
+  <!-- 6 · S4 screen -->
+  <section class="slide" data-dur="15">
+    <h2>Approved products only.</h2>
+    <div class="funnel">
+      <div class="fbar f1">mechanism-matched compounds</div>
+      <div class="farrow">▼</div>
+      <div class="fbar f2">market-approved · verified at product level</div>
+      <div class="farrow">▼</div>
+      <div class="fbar f3">each carries its own counter-evidence</div>
+    </div>
+    <div class="sub"><span class="dim">a falsification-priority ordering — not an efficacy ranking</span></div>
+    <div class="brandfoot">JiuTian Bio · MVA Hackathon 2026</div>
+  </section>
+
+  <!-- 7 · S5 results -->
+  <section class="slide" data-dur="16">
+    <h2>Two hypotheses — and two honest exclusions</h2>
+    <table class="cand">
+      <tr><th style="width:24%">candidate</th><th style="width:22%">axis</th><th>standing</th></tr>
+      <tr><td>Everolimus<span class="tag tA">TIER A</span></td><td>mTORC1</td>
+          <td>deepest pediatric precedent (TSC) · no MVA data</td></tr>
+      <tr><td>Metformin<span class="tag tB">TIER B</span></td><td>energy stress</td>
+          <td>exploratory · single evidence layer</td></tr>
+      <tr><td>Chloroquine<span class="tag tX">PROBE ✗</span></td><td>aneuploid-cell fitness</td>
+          <td>not nominated — could harm aneuploid tissues</td></tr>
+      <tr><td>NAD–SIRT2<span class="tag tX">EXCLUDED</span></td><td>BUBR1 abundance</td>
+          <td>no approved single-ingredient product</td></tr>
+    </table>
+    <div class="brandfoot">JiuTian Bio · MVA Hackathon 2026</div>
+  </section>
+
+  <!-- 8 · S5 highlight -->
+  <section class="slide" data-dur="17">
+    <h1 style="font-size:96px">The most mechanistically<br>interesting axis is the one<br><span class="accent">without an approved product.</span></h1>
+    <div class="sub">We excluded it anyway. Rules are rules.</div>
+    <div class="brandfoot">JiuTian Bio · MVA Hackathon 2026</div>
+  </section>
+
+  <!-- 9 · S6 experiment 0 -->
+  <section class="slide" data-dur="17">
+    <div class="exp0">Experiment <span class="accent">0</span></div>
+    <div class="sub">Measure BUBR1 abundance in the child's own cells — <b>before anything else</b>.<br>
+      If it is normal, our central premise fails — <b class="blue">and we would report that.</b></div>
+    <div class="sub" style="margin-top:28px"><span class="dim">falsifiable predictions · low-cost worm model · null results reported</span></div>
+    <div class="brandfoot">JiuTian Bio · MVA Hackathon 2026</div>
+  </section>
+
+  <!-- 10 · S7 scalability -->
+  <section class="slide" data-dur="17">
+    <h2>Disease-agnostic by design</h2>
+    <div class="steps">
+      <div class="step"><span class="n">1</span>controlled genotype</div>
+      <div class="step"><span class="n">2</span>graded mechanism chain</div>
+      <div class="step"><span class="n">3</span>druggable property</div>
+      <div class="step"><span class="n">4</span>approved-drug screen</div>
+      <div class="step"><span class="n">5</span>falsifiable predictions</div>
+      <div class="step"><span class="n">6</span>null results reported</div>
+    </div>
+    <div class="stamp">2nd-disease retrospective walkthrough ✓</div>
+    <div class="brandfoot">JiuTian Bio · MVA Hackathon 2026</div>
+  </section>
+
+  <!-- 11 · S8 close -->
+  <section class="slide" data-dur="10">
+    <h1>One child. Zero trials.<br><span class="accent">Two testable hypotheses.</span></h1>
+    <div class="hero-sub">research hypotheses — not treatment proposals</div>
+    <div class="brandfoot">JiuTian Bio · MVA Hackathon 2026</div>
+  </section>
+
+  <!-- 12 · end card -->
+  <section class="slide" data-dur="10">
+    <div class="kicker">Thank you</div>
+    <h2 style="font-size:110px">JiuTian Bio</h2>
+    <div class="sub">MVA Hackathon 2026 · Track 2 — Drug Repurposing<br>
+      github.com/millerice/MVASageBio<br>
+      <span class="dim">CC-BY 4.0 · grateful to the child and family who made this work possible</span></div>
+  </section>
+
+  <!-- rehearsal aids -->
+  <div id="bar"></div>
+  <div id="ctrl">←/→ slide · F fullscreen · A auto-advance · C hide help · <span id="stat"></span></div>
+</div>
+</div>
+
+<script>
+(function () {
+  var stage = document.getElementById('stage');
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var bar = document.getElementById('bar');
+  var ctrl = document.getElementById('ctrl');
+  var stat = document.getElementById('stat');
+  var durs = slides.map(function (s) { return parseInt(s.getAttribute('data-dur'), 10) || 15; });
+  var total = durs.reduce(function (a, b) { return a + b; }, 0);
+  var starts = [], acc = 0;
+  durs.forEach(function (d) { starts.push(acc); acc += d; });
+  var i = 0, auto = false, timer = null, t0 = null;
+
+  function fit() {
+    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    stage.style.transform = 'scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit); fit();
+
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function (s, k) { s.classList.toggle('active', k === i); });
+    bar.style.width = (100 * (starts[i] + durs[i] / 2) / total) + '%';
+    if (auto) arm();
+    upd();
+    location.hash = String(i + 1);
+  }
+  function upd() {
+    stat.textContent = 'slide ' + (i + 1) + '/' + slides.length +
+      ' · ' + starts[i] + '–' + (starts[i] + durs[i]) + 's of ' + total + 's' +
+      (auto ? ' · AUTO' : '');
+  }
+  function arm() {
+    if (timer) { clearTimeout(timer); timer = null; }
+    if (!auto) return;
+    t0 = Date.now();
+    timer = setTimeout(function () { show(i + 1); }, durs[i] * 1000);
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(i + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(i - 1); }
+    else if (e.key === 'f' || e.key === 'F') {
+      if (document.fullscreenElement) { document.exitFullscreen(); } else { document.documentElement.requestFullscreen(); }
+    }
+    else if (e.key === 'a' || e.key === 'A') { auto = !auto; if (auto) { arm(); } else if (timer) { clearTimeout(timer); timer = null; } upd(); }
+    else if (e.key === 'c' || e.key === 'C') { ctrl.classList.toggle('on'); }
+  });
+  document.getElementById('viewport').addEventListener('click', function (e) {
+    show(e.clientX > window.innerWidth / 2 ? i + 1 : i - 1);
+  });
+  var h = parseInt((location.hash || '#1').slice(1), 10);
+  show(isNaN(h) ? 0 : h - 1);
+})();
+</script>
+</body>
+</html>
