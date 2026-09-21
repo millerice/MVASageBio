@@ -50,5 +50,6 @@ tools/
 server_tasks/sync_q2_markdup_stats.sh
 
 # 专家评审版（用户 2026-09-18 决定不入公开仓库，仅本地分发；
-# 同日已从 git 历史彻底移除——记录见 docs/13 追记）
-docs/17-T2-Expert-Review-v0.1.md
+# 同日已从 git 历史彻底移除——记录见 docs/13 追记；
+# 2026-09-21 起改为版本中性文件名，版本号在文档内维护）
+docs/17-T2-Expert-Review*
