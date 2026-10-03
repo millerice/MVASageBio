@@ -29,7 +29,8 @@
   即报告本体，§0 Recorded tools + Addendum 已覆盖且入 0372ffb/attestation 7eb6037a；
   xlsx 非提交物。注：GenAI 必填问在 T2 表页是 A9 行，报告 §4 已映射 "A9 → §0"）
 - [x] 报告 §0 Recorded tools 追加（B1–B3 批次一并完成，0372ffb）
-- [ ] YouTube 合成内容申报勾「是（合成语音）」（外部不可核，Studio 内确认）
+- [x] YouTube 合成内容申报勾「是（合成语音）」+ 许可设置——2026-10-04 用户确认
+  「都勾好了」（Studio 内部操作，外部不可核，以用户确认关账）
 - [x] 简介补 TTS 披露行（2026-10-03 用户补加，复验在位）
 
 ## 后续
