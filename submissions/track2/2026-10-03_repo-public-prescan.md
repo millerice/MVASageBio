@@ -40,6 +40,16 @@
 **通过。** 全历史（含不可达对象）无基因组级数据、无私有附录内容、无 T1 答案坐标行、
 无患儿可识别信息、无真实凭证。仓库满足红线 1/6 的公开条件。
 
+## 公开落地复验（2026-10-03，用户 flip 后，全部匿名无凭证）
+
+- GitHub API：`visibility: public` / `private: false`；远端 main HEAD = `0372ffb`（冻结批）
+- raw 匿名拉取 `reports/JiuTian-Bio_track2_report.md`，sha256 =
+  `7eb6037a423a50beebc94df2ee5e2cf36e624327a502583451fcb469ad8a534a`，
+  与本地及 attestation 第 4 行绑定值**逐字节一致**——公开所见 = 审签版本
+- 敏感路径 raw 匿名访问全 404：`submissions/track2/pitch-narration.zh.md`、
+  `data/processed/evidence_private.jsonl`、`data/raw/`、`docs/17-*` 专家评审版
+- attestation flip_gate（commit→push→public）满足；T2 提交前置条件齐备
+
 ## 遗留（非阻断）
 
 - 38 个不可达对象留存本地（含 Q1 任务包 tar）；随 `git gc` 自然过期即可，无需主动清除
