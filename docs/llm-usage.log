@@ -101,3 +101,36 @@ Experiment 0（全假设共同前提检验）、新增并行机制 caveat（仅�
 文件同日改为版本中性名 docs/17-T2-Expert-Review.md（仍 gitignored）。本轮 Claude Code 修订
 仅涉及该未跟踪文档与记录文件；未读取受控数据，未改动主报告、候选、阈值与排名；主报告
 哈希与 attestation（12b829e3…）不受影响。
+
+## 2026-09-23 docs/17 中文对照译本（Claude Code）
+
+应用户要求，将本地 gitignored 评审包 docs/17-T2-Expert-Review.md（v0.2，英文）逐节翻译为
+中文对照本 docs/17-T2-Expert-Review.zh.md（同被 .gitignore:55 前缀通配覆盖，不随 10/24
+仓库公开）。翻译基于英文原版与仓库公开级材料；未读取受控数据（无 VCF/FASTQ/BAM 正文、
+无私有附录、无位点级内容），未连接服务器。纯翻译：未新增任何事实、数字、PMID、日期或
+claim 分级，未改动英文原版、主报告、候选、阈值与排名；英文版仍为唯一送审权威版本
+（译本头部已声明「中英出入以英文版为准」）。未执行模型输出评分/反馈。
+
+## 2026-10-02 T2 pitch 视频配音（MiniMax TTS；条目由 Claude Code 代记）
+
+服务与模型：MiniMax 网页版 TTS（minimax.io/audio/text-to-speech），模型 speech-2.8-hd；
+运营主体 Nanonoble Pte. Ltd.（新加坡，ToS 落款）。输入：仅 docs/18 §2 英文逐字稿 425 词
+（公开级：无受控数据、无位点/核型、无患儿可识别信息；该文稿本身即随提交以 CC-BY 公开）。
+输出：T2 pitch 视频英文旁白音轨。生成过程中仅在本地择优重试，未向厂商提交模型输出
+评分/反馈。
+
+条款核验（2026-10-02，Claude Code 代查公开文本）：
+1. 消费级网页应用自身的 ToS 无法匿名抓取（SPA 渲染，HTML 无任何法务链接，/terms、
+   /privacy、/legal 等路径均 307 回落首页；sitemap 无收录）。
+2. 可公开核验文本为同主体的开发者平台条款 platform.minimax.io/protocol/terms-of-service：
+   原文 "you retain your ownership rights in Client input and generated content. We may
+   use the input and generated content to provide, maintain, develop, and improve our
+   Services, …" ——输入允许用于服务改进，无「不训练」承诺，亦无留存期限承诺。
+3. 隐私政策仅承诺不用 personal data 做画像/定向投放训练，不改变第 2 条结论。
+
+结论与偏离声明：MiniMax **不满足**主报告 §0 对 LLM 服务设定的 Processor 型选择条件
+（不训练、不取得数据权利、限时留存）。本项目「仅向 Processor 型服务发送数据」约束的
+适用对象是受控数据；本次输入为公开级文稿且即将 CC-BY 公开，受控数据暴露为零，判定为
+可接受的已声明偏离（残余风险：无——输入内容无任何未公开信息）。报告 §0 追加披露行时
+须如实写明 not held to the Processor-type condition; public-tier input only，
+不得写成 Processor 型。

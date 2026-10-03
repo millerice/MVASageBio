@@ -12,7 +12,7 @@
 
 ## 0. Generative-AI disclosure (required)
 
-> **Recorded tools: Anthropic Claude via Claude Code (initial workflow); OpenAI Codex desktop (subsequent review and revisions); DeepSeek and Qwen API sessions plus one manual ChatGPT (Deep Research) session for independent cross-review — public-tier materials only.**
+> **Recorded tools: Anthropic Claude via Claude Code (initial workflow); OpenAI Codex desktop (subsequent review and revisions); DeepSeek and Qwen API sessions plus one manual ChatGPT (Deep Research) session for independent cross-review — public-tier materials only; MiniMax text-to-speech for pitch-video narration (public-tier script; addendum below).**
 
 The initial workflow used Claude Code for variant triage, literature search assistance, coding,
 and drafting. The usage log records that workflow as using a commercial Anthropic API plan.
@@ -29,6 +29,14 @@ Codex sessions had account Data Controls (model-training opt-in) disabled, confi
 account settings by the participant (account-side settings are participant-verified, not
 independently auditable; per-session Codex model versions were not logged).
 Server computations were executed by the participant.
+
+Addendum (2026-10-02): pitch-video narration was synthesized with MiniMax text-to-speech
+(speech-2.8-hd, web app) from the human-written public script — the only material transmitted to
+that service. MiniMax was not held to the Processor-type selection condition above: its standard
+terms permit service-improvement use of inputs (platform terms of service verified 2026-10-02;
+consumer-app terms are not anonymously retrievable). No controlled or non-public data was
+transmitted, and the script itself is published with this submission. The usage log records the
+deviation and its assessment.
 The ledger is the permitted source for scientific report claims; automated citation checks do not
 replace source-level human review. Independent cross-review was completed on 2026-09-17 —
 citation audit, mechanism-chain/ledger consistency, rules-language, medical-wording, and
@@ -370,6 +378,10 @@ the mammalian cell triplet above. We commit to reporting null results.
 
 ## 5. Data sources & reproducibility (GitHub)
 
+Repository (will be made public for the review period; flip is a pre-submission gate): **https://github.com/millerice/MVASageBio**.
+Pitch video (3-minute required submission component): https://youtu.be/sKnrdGWi8o8
+(YouTube, unlisted; narration disclosure in §0).
+
 Repository materials intended for public review: analysis pipeline `src/track2_repurposing/` —
 `ledger.py` (schema lint/stats), `validate_chain.py` (chain×ledger×claim-manifest cross-audit; `--dot`
 renders the mechanism graph), `build_drug_pool.py` (openFDA component-screening harness), and
@@ -384,8 +396,11 @@ historical Q2 alignment, GC-bin generation, and original adjudication scripts re
 gitignored storage. Complete execution provenance linking server scripts, inputs, and BAMs is still
 being audited; current code hashes alone cannot establish which code ran historically. Controlled genomic data never enters the
 repository (gene/domain-level public granularity only; no coordinates, alleles, HGVS, read counts, or
-karyotype-level measurements appear in public artifacts). Dataset citation per the Synapse page reference will accompany the published repository
-(to be inserted at submission; tracked in the pre-submission checklist) [EV-0082]. Per the rules, all raw
+karyotype-level measurements appear in public artifacts). Dataset citation: *Rare Disease, Real Kid: MVA Hackathon 2026 - Dataset.* Synapse project syn76251147
+(https://www.synapse.org/Synapse:syn76251147); controlled-access data distributed via the gated
+Hugging Face dataset SageBio/mva-hackathon-2026-data. The Synapse page provides no explicit citation
+string or DOI as of 2026-10-03; this reference is constructed from the page identifiers
+[EV-0096, EV-0033]. Per the rules, all raw
 and genome-derivable data will be deleted within 30 days of the hackathon close, confirmed by email to
 the designated official addresses, and no manuscript using this dataset will be submitted during the
 embargo period.
@@ -472,4 +487,6 @@ This submission is released under **CC-BY 4.0** per hackathon rules.
 > family who generously contributed their data and their story to advance research into this rare
 > disease. We acknowledge their trust in making this Hackathon possible.* [EV-0082]
 
-Dataset citation: per the reference provided on the hackathon Synapse page (inserted at submission).
+Dataset citation: *Rare Disease, Real Kid: MVA Hackathon 2026 - Dataset.* Synapse syn76251147
+(https://www.synapse.org/Synapse:syn76251147); controlled-access data via Hugging Face
+(SageBio/mva-hackathon-2026-data) [EV-0096].

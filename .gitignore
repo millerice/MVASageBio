@@ -53,3 +53,6 @@ server_tasks/sync_q2_markdup_stats.sh
 # 同日已从 git 历史彻底移除——记录见 docs/13 追记；
 # 2026-09-21 起改为版本中性文件名，版本号在文档内维护）
 docs/17-T2-Expert-Review*
+
+# 逐页旁白稿中文对照本（内部档；英文版 pitch-narration.md 为权威送审版本）
+submissions/track2/pitch-narration.zh.md
