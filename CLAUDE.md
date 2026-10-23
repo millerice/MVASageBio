@@ -12,7 +12,7 @@ MVA 黑客松 2026 参赛项目（Sage Bionetworks × MVA Society × Hugging Fac
 1. **基因组数据绝不入 git**：`data/raw`、`data/processed` 已被 .gitignore 拦截；任何 VCF/BAM/CRAM/基因组级基因型表不得进入仓库、提交物或公开报告
 2. **不转发数据、不 recontact**：受控数据集仅限本人使用；不得联系患儿家庭、家族成员或 MVA Society 任何联系人
 3. **LLM 使用**：仅向 Processor 型服务（不训练、不取得数据权利、限时留存）发送数据；不给模型输出点评分/反馈；使用 credits 前先读 credits 附加条款；数据交互记录到 `docs/llm-usage.log`；methods 报告必须含披露行
-4. **赛后 30 天**删除全部原始 + 基因组级衍生数据，并发送确认邮件：**主送 `MVAHackathon2026@synapse.org`**（数据集门禁表单，用户 2026-09-08 决定），抄送 `RarediseaserealkidMVAhackathon2026@synapse.org`（Rules 页 L64 明文要求，且注明 30 天未联系会被主动追联）——两处官方来源不一致（EV-0032）（删除/保留清单见 docs/01 §6）
+4. **赛后 30 天（≤2026-11-23）**删除全部原始 + 基因组级衍生数据，并发送确认邮件：**主送 `cnb@sagebase.org`**（Rules 页 2026-10-13 官方更新 + 置顶公告 #28 同口径，EV-0097），抄送 `MVAHackathon2026@synapse.org`（数据集门禁表单地址，未见官方撤回）；旧 Rules 地址 `RarediseaserealkidMVAhackathon2026@synapse.org` 已被官方替换、弃用（EV-0032 冲突由此解决）（删除/保留清单见 docs/01 §6）
 5. **T2 只提名已上市药物**（market-approved），全部产出不得出现治疗建议措辞
 6. GitHub 评审开始前公开；公开前自检无基因组级数据
 7. 提交物 CC-BY；发表带官方致谢段；禁稿期内不投稿使用本数据集的论文
@@ -56,6 +56,7 @@ MVA 黑客松 2026 参赛项目（Sage Bionetworks × MVA Society × Hugging Fac
 - 本机网络：HF 官方域名走本地代理 `127.0.0.1:7890`（HTTPS_PROXY）；hf-mirror 可列目录但 gated 大文件 302 回官方 CDN；源码镜像获取已官方复核 7/7 一致（EV-0038）
 - **提交物一律英文**：官方无明文语言要求（源码 grep 零命中），但 methods 表单（xlsx）本身是英文结构化问卷、评审方为 SageBio/国际评委——对提交面的产物（CSV notes/报告/表单/视频）全部英文；中文仅限内部工作文档（CLAUDE.md/docs/台账）。官方 methods 表单（references/official/static/templates/）为 A 列问题 B 列作答结构，**A10 生成式 AI 披露为必填项**
 - gnomAD v4.1 无 af-only 发布；可行战术 = bcftools 经代理按基因区域远程拉切片（~70s/基因），v4.1 INFO 自带 AF/CADD/REVEL/SpliceAI/VEP；候选级全新变异注释走 Ensembl VEP REST；SnpEff 数据库下载被 Azure 阻断（Java 代理参数也无效）
+- **时间线（EV-0099）**：评审期至 **2026-12-17**、获奖公布 **2026-12-18**，仓库保持 public 至公布日；T1 无排名现金奖、终榜满分 = 摘要论文 consortium author，T2 前三 + Innovation Prize = named authors，T1 终评含 methods write-up（EV-0098）；官方探索 F1000Research/Research Square 出版通道（#28）
 
 ## 工作方式
 
