@@ -12,7 +12,7 @@ MVA 黑客松 2026 参赛项目（Sage Bionetworks × MVA Society × Hugging Fac
 1. **基因组数据绝不入 git**：`data/raw`、`data/processed` 已被 .gitignore 拦截；任何 VCF/BAM/CRAM/基因组级基因型表不得进入仓库、提交物或公开报告
 2. **不转发数据、不 recontact**：受控数据集仅限本人使用；不得联系患儿家庭、家族成员或 MVA Society 任何联系人
 3. **LLM 使用**：仅向 Processor 型服务（不训练、不取得数据权利、限时留存）发送数据；不给模型输出点评分/反馈；使用 credits 前先读 credits 附加条款；数据交互记录到 `docs/llm-usage.log`；methods 报告必须含披露行
-4. **赛后 30 天（≤2026-11-23）**删除全部原始 + 基因组级衍生数据，并发送确认邮件：**主送 `cnb@sagebase.org`**（Rules 页 2026-10-13 官方更新 + 置顶公告 #28 同口径，EV-0097），抄送 `MVAHackathon2026@synapse.org`（数据集门禁表单地址，未见官方撤回）；旧 Rules 地址 `RarediseaserealkidMVAhackathon2026@synapse.org` 已被官方替换、弃用（EV-0032 冲突由此解决）（删除/保留清单见 docs/01 §6）
+4. **赛后 30 天（≤2026-11-23）**删除全部原始 + 基因组级衍生数据，并发送确认邮件：**主送 `cnb@sagebase.org`**（Rules 页 2026-10-13 官方更新 + 置顶公告 #28 同口径，EV-0097），抄送 `MVAHackathon2026@synapse.org`（数据集门禁表单地址，未见官方撤回）；旧 Rules 地址 `RarediseaserealkidMVAhackathon2026@synapse.org` 已被官方替换、弃用（EV-0032 冲突由此解决）（删除/保留清单见 docs/01 §6；**执行手册 = docs/19，10-26 触发时按其逐步执行**）
 5. **T2 只提名已上市药物**（market-approved），全部产出不得出现治疗建议措辞
 6. GitHub 评审开始前公开；公开前自检无基因组级数据
 7. 提交物 CC-BY；发表带官方致谢段；禁稿期内不投稿使用本数据集的论文
