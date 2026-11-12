@@ -50,6 +50,12 @@
   `data/processed/evidence_private.jsonl`、`data/raw/`、`docs/17-*` 专家评审版
 - attestation flip_gate（commit→push→public）满足；T2 提交前置条件齐备
 
+## 2026-11-12 更正
+
+上文「结论：通过」**错误**：可达历史中旧提交 `58a23ac`（T1 留档坐标+碱基）与 `49cef52`（T2 报告 HGVS）
+未被本扫描的正则覆盖。已于 2026-11-12 重写历史修复，见 `submissions/2026-11-12_history-rewrite.md`（EV-0105）。
+本文件其余内容保留为历史记录。
+
 ## 遗留（非阻断）
 
 - 38 个不可达对象留存本地（含 Q1 任务包 tar）；随 `git gc` 自然过期即可，无需主动清除
